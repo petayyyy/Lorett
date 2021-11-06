@@ -6,16 +6,18 @@
 ```bash
 sudo add-apt-repository -y ppa:pothosware/framework
 ```
-
 #support libraries for pothos (required)
-<sudo add-apt-repository -y ppa:pothosware/support>
-
+```bash
+sudo add-apt-repository -y ppa:pothosware/support
+```
 #supplies soapysdr, and drivers (optional)
+```bash
 sudo add-apt-repository -y ppa:myriadrf/drivers
-
+```
 #needed when using bladerf devices
+```bash
 sudo add-apt-repository -y ppa:bladerf/bladerf
-
+```
 #needed when using usrp devices
 sudo add-apt-repository -y ppa:ettusresearch/uhd
 
