@@ -59,12 +59,12 @@ cmake ..
 make -j4
 sudo make install
 ```
-# Проверка все ли зависимости встали SoapySdr
+## Проверка все ли зависимости встали SoapySdr
 ```bash
 sudo ldconfig #needed on debian systems
 SoapySDRUtil --info
 ```
-# Подготовка к установке SoapyAirspy
+## Подготовка к установке SoapyAirspy
 ```bash
 cd ../..
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DLIB_INSTALL_DIR:PATH=lib64 -DLIB_SUFFIX=64 -DSOAPY_SDR_ROOT=/usr ..
@@ -72,7 +72,7 @@ sudo add-apt-repository -y ppa:myriadrf/drivers
 sudo apt-get update
 sudo apt-get install airspy libairspy-dev
 ```
-# Установка SoapyAirspy
+## Установка SoapyAirspy
 ```bash
 git clone https://github.com/pothosware/SoapyAirspy.git
 cd SoapyAirspy
@@ -82,7 +82,7 @@ cmake ..
 make
 sudo make install
 ```
-# Проверка все ли зависимости встали SoapyAirspy
+## Проверка все ли зависимости встали SoapyAirspy
 ```bash
 SoapySDRUtil --probe="driver=airspy"
 ```
