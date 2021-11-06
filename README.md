@@ -3,7 +3,9 @@
 Для запуска кода необходимо устаноить все зависимости и библиотеки:
 
 #core framework and toolkits (required)
-<sudo add-apt-repository -y ppa:pothosware/framework>
+```bash
+sudo add-apt-repository -y ppa:pothosware/framework
+```
 
 #support libraries for pothos (required)
 <sudo add-apt-repository -y ppa:pothosware/support>
