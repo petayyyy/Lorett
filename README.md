@@ -1,7 +1,5 @@
-# Lorett
-### Сборка SoapySdr
-Для запуска кода необходимо устаноить все зависимости и библиотеки:
-
+# Сборка SoapySdr
+### Для запуска кода необходимо устаноить все зависимости и библиотеки:
 #core framework and toolkits (required)
 ```bash
 sudo add-apt-repository -y ppa:pothosware/framework
