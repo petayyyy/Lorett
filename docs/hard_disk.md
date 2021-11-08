@@ -29,7 +29,7 @@ lsblk
 ```bash
 sudo mount -a
 ```
-### Если все эиапы выполнены то теперь в папке /mnt/usb храняться данные флешки
+### Если все этапы выполнены то теперь в папке /mnt/usb храняться данные флешки
 
 ### Ссылка на доп функцию
 https://qastack.ru/ubuntu/17275/how-to-show-the-transfer-progress-and-speed-when-copying-files-with-cp
