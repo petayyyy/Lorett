@@ -20,9 +20,9 @@ sudo nano /etc/fstab
 
 ```bash
 UUID=5C81-CFF0 /mnt/usb vfat auto,nofail,noatime,users,rw,uid=pi,gid=pi 0 0
-'''
+```
 ### Проверка читаеться ли флешка
-bash'''
+```bash
 lsblk
 ```
 ### Если не читается, то ввелите команду и произведите проверку снова
