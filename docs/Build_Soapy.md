@@ -93,8 +93,8 @@ pip3 install -r requirements.txt
 ```
 # Или если нет установленного репозитория Lorett, то
 ```bash
-pip3 install scipy
-pip3 install threading // or pip3 install thread6
+sudo apt-get update -y
+sudo apt-get install -y python3-scipy
 pip3 install matplotlib
 sudo apt-get install python3-pothos
 sudo apt-get install python3-soapysdr python3-numpy
