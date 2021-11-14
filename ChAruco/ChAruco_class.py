@@ -69,11 +69,12 @@ class ChAruco_calibration():
             # Destroy any open CV windows
             cv2.destroyAllWindows()
         # Make sure at least one image was found
-        if len(self.images) < 1:
-            # Calibration failed because there were no images, warn the user
-            print("Calibration was unsuccessful. No images of charucoboards were found. Add images of charucoboards and use or alter the naming conventions used in this file.")
-            # Exit for failure
-            exit()
+        if self.work_with_files:
+            if len(self.images) < 1:
+                # Calibration failed because there were no images, warn the user
+                print("Calibration was unsuccessful. No images of charucoboards were found. Add images of charucoboards and use or alter the naming conventions used in this file.")
+                # Exit for failure
+                exit()
 
         # Make sure we were able to calibrate on at least one charucoboard by checking
         # if we ever determined the image size
@@ -124,8 +125,7 @@ class ChAruco_calibration():
             # Draw the Charuco board we've detected to show our calibrator the board was properly detected
             img = aruco.drawDetectedCornersCharuco(
                     image=img,
-                    charucoCorners=charuco_corners,
-                    charucoIds=charuco_ids)
+                    charucoCorners=charuco_corners)
         
             # If our image size is unknown, set it now
             if not self.image_size:
@@ -167,11 +167,11 @@ class ChAruco_calibration():
         self.col_pictures = 25
         
         # Parameters ChAruco board
-        self.CHARUCOBOARD_ROWCOUNT = 7 
-        self.CHARUCOBOARD_COLCOUNT = 5
-        self.bit_aruco = 6 
-        self.squareLength=0.036 
-        self.markerLength=0.022
+        self.CHARUCOBOARD_ROWCOUNT = 5 
+        self.CHARUCOBOARD_COLCOUNT = 8
+        self.bit_aruco = 4 
+        self.squareLength=0.034 
+        self.markerLength=0.027
     def start_calibration(self):
         self.Charuco_board_setting()
         if self.work_with_files:
@@ -187,7 +187,7 @@ class ChAruco_calibration():
             for i in range(self.col_pictures):
                 try:
                     img = self.bridge.imgmsg_to_cv2(rospy.wait_for_message(self.input_topic, Image), 'bgr8')
-                    print("Took picture from topic {0} in {1}}".format(i+1,self.col_pictures))
+                    print("Took picture from topic {0} in {1}".format(i+1,self.col_pictures))
                     self.find_charuco(img)
                 except Exception as e: print(e)
         print("Wait a little bit time")
