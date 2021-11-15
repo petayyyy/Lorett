@@ -1,6 +1,7 @@
 import os
 import cv2
 from cv2 import aruco
+import yaml
 import numpy
 import rospy
 from sensor_msgs.msg import Image
@@ -8,6 +9,33 @@ from cv_bridge import CvBridge
 rospy.init_node('picture_cap')
 
 class ChAruco_calibration():
+    def __yaml_save(self):
+        w, h, = self.image_size
+        rm_data = [1, 0, 0, 0, 1, 0, 0, 0, 1]
+        mat_data = []
+        for i in self.cameraMatrix:
+            for x in i: mat_data.append(x)
+        mat_data = list(map(float, mat_data))
+
+        dst_data = list(map(float, self.distCoeffs[0]))
+
+        pm_data = []
+        for i in self.projection_matrix:
+            for x in i: pm_data.append(x)
+        pm_data = list(map(float, pm_data))
+
+        data = {"image_width": w,
+                "image_height": h,
+                "distortion_model": "plumb_bob",
+                "camera_name": "raspicam",
+                "camera_matrix": {"rows": 3, "cols": 3, "data": mat_data},
+                "distortion_coefficients": {"rows": 1, "cols": 8, "data": dst_data},
+                "rectification_matrix": {"rows": 3, "cols": 3, "data": rm_data},
+                "projection_matrix": {"rows": 3, "cols": 4, "data": pm_data}}
+        file = open("2"+self.fname, "w")
+        for key in data:
+            #for key2 in key: file.write(yaml.dump({key2: key[key2]}))
+            file.write(yaml.dump({key: data[key]}, default_flow_style=False))
     def save_to_file(self):
         with open(self.fname, "w") as f:
             f.write("image_width: 320\nimage_height: 240\ndistortion_model: plumb_bob\ncamera_name: main_camera_optical\ncamera_matrix:\n  rows: 3\n  cols: 3\n  data:\n")
@@ -114,10 +142,9 @@ class ChAruco_calibration():
                 markerIds=ids,
                 image=gray,
                 board=self.CHARUCO_BOARD)
-
         # If a Charuco board was found, let's collect image/corner points
         # Requiring at least 20 squares
-        if response > 20:
+        if len(ids) >= (self.CHARUCOBOARD_COLCOUNT * self.CHARUCOBOARD_ROWCOUNT) // 2:
             # Add these corners and ids to our calibration arrays
             self.corners_all.append(charuco_corners)
             self.ids_all.append(charuco_ids)
@@ -193,7 +220,8 @@ class ChAruco_calibration():
         print("Wait a little bit time")
         self.calculate_parameters()
         self.save_to_file()
+        self.__yaml_save()
 
 if __name__ == "__main__":
-    detect = ChAruco_calibration(work_with_files=True, cv2show=False, pub_in_topic="Debug")
+    detect = ChAruco_calibration(work_with_files=False, cv2show=False, pub_in_topic="Debug")
     detect.start_calibration()
