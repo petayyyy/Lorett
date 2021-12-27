@@ -14,10 +14,8 @@ from scipy import signal
 from scipy.fftpack import fftshift
 import threading
 
-#a = ["FENGYUN 3C", 170]
-#a = ["FENGYUN 3B", 170]
+# Put your name of satellite and trak's time
 a = ["METOP-B", 170]
-
 SDR_CONFIGS = {
 	'calibr' : { 'freq': 137e6, 'rssi_freq': [137e6,137e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 }, #default calibration
 	'NOAA 18' : { 'freq': 1707.0e6, 'rssi_freq': [1707.3e6,1707.7e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 },
