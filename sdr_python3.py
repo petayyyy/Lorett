@@ -5,6 +5,7 @@ VERSION='1.2.20201027'
 import SoapySDR
 from SoapySDR import *
 import sys
+import os
 import time
 from datetime import datetime,timedelta
 import numpy
@@ -13,9 +14,10 @@ from scipy import signal
 from scipy.fftpack import fftshift
 import threading
 
-
+# Put your name of satellite and track's time
+a = ["METOP-B", 170]
 SDR_CONFIGS = {
-	'calibr' : { 'freq': 1707.0e6, 'rssi_freq': [1707.0e6,1708.0e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 }, #default calibration
+	'calibr' : { 'freq': 137e6, 'rssi_freq': [137e6,137e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 }, #default calibration
 	'NOAA 18' : { 'freq': 1707.0e6, 'rssi_freq': [1707.3e6,1707.7e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 },
 	'NOAA 19' : { 'freq': 1698.0e6, 'rssi_freq': [1698.3e6,1698.8e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 },
 	'METEOR-M 2' : { 'freq': 1700.0e6, 'rssi_freq': [1700.3e6,1700.8e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 },
@@ -315,27 +317,29 @@ def listSoapyDevices():
 	results = SoapySDR.Device.enumerate()
 	for result in results: print(result)
 
-def test_sdr(satellite, length):
+def test_sdr(satellite, length, sdr):
+	fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(satellite, datetime.utcnow())
+	if not os.path.exists("tracks"): os.makedirs("tracks") 
+	os.mkdir("tracks/{}".format(fileName))
+	fileName = "tracks/{}/{}".format(fileName, fileName)
+	sdr.start("{0}.iq".format(fileName),"{0}.iq.log".format(fileName),"")
+	time.sleep(length)
+	sdr.stop()
+#	print (str(sdr.rssi_log))
+	sdr=None
+	#query device info
+
+def calibrate(satellite):
 	print ("Starting SDR test....")
-	#listSoapyDevices()
-	#
 	sdr = OSMO_SDR("airspy")
 	if sdr.load_config(satellite):
 		sdr.calibrate(satellite)
 		time.sleep(1)
-		
-		fileName = "{1:%Y%m%d_%H%M%S}_{0}".format(satellite, datetime.utcnow())
-
-		sdr.start("{0}.iq".format(fileName),"{0}.iq.log".format(fileName),"")
-		time.sleep(length)
-		sdr.stop()
-
-		print (str(sdr.rssi_log))
-	sdr=None
-	#query device info
-
+	return sdr
 
 if __name__ == '__main__':
 	#a = input("Put sateline and time").split()
-	a = ["SARAL", 200]
-	test_sdr(a[0], int(a[1]))
+	sdr = calibrate(a[0])
+
+	input("\nPress any key to continue")
+	test_sdr(a[0],a[1],sdr)
