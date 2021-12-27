@@ -14,7 +14,7 @@ from scipy import signal
 from scipy.fftpack import fftshift
 import threading
 
-# Put your name of satellite and trak's time
+# Put your name of satellite and track's time
 a = ["METOP-B", 170]
 SDR_CONFIGS = {
 	'calibr' : { 'freq': 137e6, 'rssi_freq': [137e6,137e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 }, #default calibration
@@ -319,6 +319,7 @@ def listSoapyDevices():
 
 def test_sdr(satellite, length, sdr):
 	fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(satellite, datetime.utcnow())
+	if not os.path.exists("tracks"): os.makedirs("tracks") 
 	os.mkdir("tracks/{}".format(fileName))
 	fileName = "tracks/{}/{}".format(fileName, fileName)
 	sdr.start("{0}.iq".format(fileName),"{0}.iq.log".format(fileName),"")
