@@ -66,7 +66,7 @@ pip3 install -r requirements.txt
 # Или если нет установленного репозитория Lorett, то
 ```bash
 pip3 install thread6
-pip3 install matplotlib
+sudo apt-get install python3-matplotlib
 sudo apt-get install python3-pothos
 sudo apt-get install python3-soapysdr python3-numpy
 sudo apt-get install python3-scipy
