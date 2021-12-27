@@ -98,4 +98,5 @@ pip3 install threading // or pip3 install thread6
 pip3 install matplotlib
 sudo apt-get install python3-pothos
 sudo apt-get install python3-soapysdr python3-numpy
+sudo apt-get install python3-scipy
 ```
