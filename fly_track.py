@@ -18,15 +18,13 @@ land = rospy.ServiceProxy('land', Trigger)
 path = "drone_logs/"
 
 def get_logger(name=__file__, file='log.txt', encoding='utf-8'):
+    if not os.path.exists(file.split("/")[0]): os.makedirs(file.split("/")[0])
     log = logging.getLogger(name)
     log.setLevel(logging.INFO)
-
     formatter = logging.Formatter(' %(message)s')
-
     fh = logging.FileHandler(file, encoding=encoding)
     fh.setFormatter(formatter)
     log.addHandler(fh)
-
     sh = logging.StreamHandler(stream=sys.stdout)
     sh.setFormatter(formatter)
     log.addHandler(sh)
@@ -39,21 +37,14 @@ rospy.sleep(3)
 navigate(x=1, y=0, z=0, speed=0.5, frame_id='body')
 rospy.sleep(2)
 
-# Start Sdr calibration
-#process = subprocess.Popen('/usr/bin/python3 ~/sdr_2_python3.py')
-#process.start()
-
 navigate(x=0, y=0, z=zz, speed=0.5, frame_id='aruco_map')
 rospy.sleep(3)
 print("Start Calibrate sdr please")
 
-#navigate(x=x_apogee, y=y_apogee, z=zz, speed=0.5, frame_id='aruco_map')
-#rospy.sleep(3)
-
-#print(sateline_name + "_" + "_".join([str(j) for j in data[0][:3]]) + ".log")
-#log = get_logger(file= path+ sateline_name + "_" + "_".join([str(j) for j in data[0][:3]]) + ".log")
-#log.info("Corrent coordinat is: x= {0}, y= {1}, z= {2}".format(x_apogee,y_apogee,zz))
-#log.info("   x (del_x)         y (del_y)           z (del_z)        z_lazer")
+print(sateline_name + "_" + "_".join([str(j) for j in data[0][:3]]) + ".log")
+log = get_logger(file= path+ sateline_name + "_" + "_".join([str(j) for j in data[0][:3]]) + ".log")
+log.info("Corrent coordinat is: x= {0}, y= {1}, z= {2}".format(x_apogee,y_apogee,zz))
+log.info("   x (del_x)         y (del_y)           z (del_z)        z_lazer")
 
 
 for f in data:
@@ -67,11 +58,4 @@ for f in data:
 		navigate(x=f[3], y=f[4], z=zz, frame_id="aruco_map", speed = 0.5)
 		print("Delta time is {} seconds".format(t))
 		rospy.sleep(0.2)
-"""
-for i in range(time_delta*2):
-        navigate(x=x_apogee, y=y_apogee, z=zz, speed=0.25, frame_id='aruco_map')
-        rospy.sleep(0.5)
-        telemetry = get_telemetry("aruco_map")
-        log.info("{0} ({3})     {1} ({4})       {2} ({5})".format(round(telemetry.x, 3), round(telemetry.y, 3), round(telemetry.z, 3), abs(round(telemetry.x-x_apogee,3)), abs(round(telemetry.y - y_apogee,3)), abs(round(telemetry.z - zz,3))))
-"""
 land()
