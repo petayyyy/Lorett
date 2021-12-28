@@ -4,12 +4,19 @@ import glob
 import os
 import json
 
+# Put your lon, lat, azimuth correction and alt
+lon=37.498770
+lat=55.930620
+azimuthCorrection=89
+alt=0.184
+# Generate data about your placement
+station = Station("C4S-0000",lon=lon, lat=lat, azimuthCorrection=azimuthCorrection, alt=alt)
 # Generate track
-station = Station("Clover-Ilya",lon=37.498770, lat=55.930620, azimuthCorrection=89, alt=0.184)
 station.findPasses(datetime.utcnow(), 30, saveTrack=True, printTrack= False)
 
 list_of_files = glob.glob('tracks/*') # * means all if need specific format then *.csv
 latest_file = max(list_of_files, key=os.path.getctime)
+# zz - is distance from drone to mirror
 zz = 0.94
 
 with open(latest_file, "r") as f:
@@ -26,4 +33,3 @@ with open('/home/pi/config.py', 'w') as fw:
     fw.writelines("\nx_apogee, y_apogee, zz = {0}, {1}, {2}".format(x_apogee, y_apogee, zz))
     fw.writelines("\nsateline_name = '{}'".format(satellite_name))
     fw.writelines("\ntime_delta = {}".format(  3600*(d[-1][0]-d[0][0]) + 60*(d[-1][1]-d[0][1]) + (d[-1][2] - d[0][2])))
-
