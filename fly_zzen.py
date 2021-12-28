@@ -5,43 +5,26 @@ from sensor_msgs.msg import Range
 import logging
 import sys
 
-
 rospy.init_node('flight')
 
 get_telemetry = rospy.ServiceProxy('get_telemetry', srv.GetTelemetry)
 navigate = rospy.ServiceProxy('navigate', srv.Navigate)
-navigate_global = rospy.ServiceProxy('navigate_global', srv.NavigateGlobal)
-set_position = rospy.ServiceProxy('set_position', srv.SetPosition)
-set_velocity = rospy.ServiceProxy('set_velocity', srv.SetVelocity)
-set_attitude = rospy.ServiceProxy('set_attitude', srv.SetAttitude)
-set_rates = rospy.ServiceProxy('set_rates', srv.SetRates)
 land = rospy.ServiceProxy('land', Trigger)
 
 file_name = "drone_logs/"
-#////////////////////////
-# Fly 0 0
-#xx, yy, zz = 0.02, 0.05, 0.81
-#file_name += "calibr.log"
-# METOP-B
-#xx, yy, zz = 0, 0, 0.81
-#file_name += "METOP.log"
-# FENGYUN 3B
-#xx, yy, zz = -0.025,  0.059, 0.86
-#file_name += "FENGYUN_3B.log"
-# FENGYUN 3C
-xx, yy, zz = 0.051,   -0.147, 0.95
-file_name += "FENGYUN_3C.log"
+# Put your data her: 
+# x, y, z - coordinat apogee
+# file_name - name of satellite
+xx, yy, zz = -0.025,  0.059, 0.86
+file_name += "FENGYUN_3B.log"
 
 def get_logger(name=__file__, file='log.txt', encoding='utf-8'):
     log = logging.getLogger(name)
     log.setLevel(logging.INFO)
-
     formatter = logging.Formatter(' %(message)s')
-
     fh = logging.FileHandler(file, encoding=encoding)
     fh.setFormatter(formatter)
     log.addHandler(fh)
-
     sh = logging.StreamHandler(stream=sys.stdout)
     sh.setFormatter(formatter)
     log.addHandler(sh)
