@@ -26,4 +26,4 @@ git clone https://github.com/petayyyy/Lorett.git
 '''bash
 cd Lorett
 '''
-В этом репозитории лежат файлы зависания в зените спутника [fly_zzen.py](fly_zzen.py)
+В этом репозитории лежат файлы зависания в зените спутника [fly_zzen.py](~/fly_zzen.py)
