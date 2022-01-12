@@ -15,9 +15,9 @@
 Рис.3  
 
 Более подробно данный этап описан в докуметации Clover (https://clover.coex.tech/ru/image.html)
-## 2. Установка зависимостей.
+## 2. Установка зависимостей  на дроне.
 По данному пункту есть отдельное поссобие [Build_Soapy](Build_Soapy.md). Оно описывает установку всех зависимостей для записи данных с помощью SDR.
-## 3. Установка необходимых файлов.
+## 3. Установка необходимых файлов на дрон.
 Для установки файлов с ПО необходимо установить репозиторий проекта.
 ```bash
 git clone https://github.com/petayyyy/Lorett.git
@@ -33,3 +33,11 @@ cd Lorett
 *Запись данных с помощью SDR (данные спутника изменяются в файле) [sdr_python3.py](https://github.com/petayyyy/Lorett/blob/main/sdr_python3.py).  
 *Параметры полетного контроллера [Stable_param.params](https://github.com/petayyyy/Lorett/blob/main/FCU/Stable_param.params).  
 *В папке "docs" лежат все документации с которыми стоит ознакомиться для корректной работы с Комплексом [docs](https://github.com/petayyyy/Lorett/tree/main/docs).
+## 4. Установка ПО на ноутбук.
+Для удобного взаимодействия с дроном необходимо установить ряд приложений на ваше устройство:  
+* QGroundControl http://qgroundcontrol.com/downloads/  (Рис.4)
+![1111](https://user-images.githubusercontent.com/47917455/149153282-13fe328c-e0c2-4188-8e9c-b607d4075244.png)
+Рис.4  
+* WinSCP https://winscp.net/eng/download.php (Рис.5)
+![1111](https://user-images.githubusercontent.com/47917455/149153486-6111996a-a5e6-42cb-83a8-2918117dade3.png)
+Рис.5  
