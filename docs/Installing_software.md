@@ -27,17 +27,28 @@ git clone https://github.com/petayyyy/Lorett.git
 cd Lorett
 ```
 В этом репозитории лежат файлы:  
-*Зависания в зените спутника [fly_zzen.py](https://github.com/petayyyy/Lorett/blob/main/fly_zzen.py).  
-*Пролет по траектории спутника [fly_track.py](https://github.com/petayyyy/Lorett/blob/main/fly_track.py).  
-*Создание трека, в соответствии с выбранным спутником для определенного места (данные широты, долготы и высоты над уровнем моря изменяются в файле)  [getPass_file.py](https://github.com/petayyyy/Lorett/blob/main/getPass_file.py).  
-*Запись данных с помощью SDR (данные спутника изменяются в файле) [sdr_python3.py](https://github.com/petayyyy/Lorett/blob/main/sdr_python3.py).  
-*Параметры полетного контроллера [Stable_param.params](https://github.com/petayyyy/Lorett/blob/main/FCU/Stable_param.params).  
-*В папке "docs" лежат все документации с которыми стоит ознакомиться для корректной работы с Комплексом [docs](https://github.com/petayyyy/Lorett/tree/main/docs).
+* Зависания в зените спутника [fly_zzen.py](https://github.com/petayyyy/Lorett/blob/main/fly_zzen.py).  
+* Пролет по траектории спутника [fly_track.py](https://github.com/petayyyy/Lorett/blob/main/fly_track.py).  
+* Создание трека, в соответствии с выбранным спутником для определенного места (данные широты, долготы и высоты над уровнем моря изменяются в файле)  [getPass_file.py](https://github.com/petayyyy/Lorett/blob/main/getPass_file.py).  
+* Запись данных с помощью SDR (данные спутника изменяются в файле) [sdr_python3.py](https://github.com/petayyyy/Lorett/blob/main/sdr_python3.py).  
+* Параметры полетного контроллера [Stable_param.params](https://github.com/petayyyy/Lorett/blob/main/FCU/Stable_param.params).  
+* В папке "docs" лежат все документации с которыми стоит ознакомиться для корректной работы с Комплексом [docs](https://github.com/petayyyy/Lorett/tree/main/docs).
 ## 4. Установка ПО на ноутбук.
 Для удобного взаимодействия с дроном необходимо установить ряд приложений на ваше устройство:  
-* QGroundControl http://qgroundcontrol.com/downloads/  (Рис.4)
+* QGroundControl http://qgroundcontrol.com/downloads/  (Рис.4).
 ![1111](https://user-images.githubusercontent.com/47917455/149153282-13fe328c-e0c2-4188-8e9c-b607d4075244.png)
 Рис.4  
-* WinSCP https://winscp.net/eng/download.php (Рис.5)
+* WinSCP https://winscp.net/eng/download.php (Рис.5).
 ![1111](https://user-images.githubusercontent.com/47917455/149153486-6111996a-a5e6-42cb-83a8-2918117dade3.png)
 Рис.5  
+* Visual Studio Code https://code.visualstudio.com/download (Рис.6).
+![1111](https://user-images.githubusercontent.com/47917455/149154187-498e58cd-9e12-4158-a84f-8ae730595fc0.png)
+Рис.6  
+* Orbitron http://www.stoff.pl/ (Рис.7) ([Туториал по установке](https://r4uab.ru/orbitron-setting/)).
+![1111](https://user-images.githubusercontent.com/47917455/149154711-bb0330cb-cfb7-4509-86ee-74b535ed665b.png)
+Рис.7  
+* Terminal https://www.microsoft.com/ru-ru/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab (Рис.8)
+![1111](https://user-images.githubusercontent.com/47917455/149155466-e5472920-1825-4f7a-a8a3-e015c6e96308.png)
+Рис.8  
+
+
