@@ -4,11 +4,11 @@
 sudo apt-get update
 sudo apt-get install python3-pothos
 ```
-Поставим soapysdr и numpy для python3
+Поставим SoapySdr и Numpy для python3
 ```bash
 sudo apt-get install python3-soapysdr python3-numpy
 ```
-Устновим airspy со всеми зависимостями
+Устновим Airspy со всеми зависимостями
 ```bash
 sudo apt-get install airspy soapysdr-module-airspy
 ```
@@ -17,7 +17,7 @@ sudo apt-get install airspy soapysdr-module-airspy
 PothosUtil --system-info
 SoapySDRUtil --info
 ```
-Поставим soapysdr на систему для дальнейшей записи данных
+Поставим SoapySdr на систему для дальнейшей записи данных
 ```bash
 cd catkin_ws/src/
 git clone https://github.com/pothosware/SoapySDR.git
@@ -29,7 +29,7 @@ cmake ..
 make -j4
 sudo make install
 ```
-### Проверка все ли зависимости встали soapysdr
+### Проверка все ли зависимости встали SoapySdr
 ```bash
 sudo ldconfig
 SoapySDRUtil --info
