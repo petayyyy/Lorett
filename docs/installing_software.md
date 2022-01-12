@@ -29,4 +29,7 @@ cd Lorett
 В этом репозитории лежат файлы:  
 *Зависания в зените спутника [fly_zzen.py](https://github.com/petayyyy/Lorett/blob/main/fly_zzen.py).  
 *Пролет по траектории спутника [fly_track.py](https://github.com/petayyyy/Lorett/blob/main/fly_track.py).  
-*Создание трека, в соответствии с выбранным спутником для определенного места (изменяются данные широты, долготы и высоты над уровнем моря в файле)  [getPass_file.py](https://github.com/petayyyy/Lorett/blob/main/getPass_file.py).  
+*Создание трека, в соответствии с выбранным спутником для определенного места (данные широты, долготы и высоты над уровнем моря изменяются в файле)  [getPass_file.py](https://github.com/petayyyy/Lorett/blob/main/getPass_file.py).  
+*Запись данных с помощью SDR (данные спутника изменяются в файле) [sdr_python3.py](https://github.com/petayyyy/Lorett/blob/main/sdr_python3.py).  
+*Параметры полетного контроллера [Stable_param.params](https://github.com/petayyyy/Lorett/blob/main/FCU/Stable_param.params).  
+*В папке "docs" лежат все документации с которыми стоит ознакомиться для корректной работы с Комплексом [docs](https://github.com/petayyyy/Lorett/tree/main/docs).
