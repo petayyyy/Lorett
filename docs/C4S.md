@@ -19,11 +19,14 @@
 По данному пункту есть отдельное поссобие [Build_Soapy](Build_Soapy.md). Оно описывает установку всех зависимостей для записи данных с помощью SDR.
 ## 3. Установка необходимых файлов.
 Для установки файлов с ПО необходимо установить репозиторий проекта.
-'''bash
+```bash
 git clone https://github.com/petayyyy/Lorett.git
-'''
+```
 После необходимо в него перейти, для работы с комплексом.
-'''bash
+```bash
 cd Lorett
-'''
-В этом репозитории лежат файлы зависания в зените спутника [fly_zzen.py](~/fly_zzen.py)
+```
+В этом репозитории лежат файлы:
+*Зависания в зените спутника [fly_zzen.py](https://github.com/petayyyy/Lorett/blob/main/fly_zzen.py).
+*Пролет по траектории спутника [fly_track.py](https://github.com/petayyyy/Lorett/blob/main/fly_track.py).
+*Создание трека, в соответствии с выбранным спутником для определенного места (изменяются данные широты, долготы и высоты над уровнем моря в файле)  [getPass_file.py](https://github.com/petayyyy/Lorett/blob/main/getPass_file.py).
