@@ -29,7 +29,7 @@ cmake ..
 make -j4
 sudo make install
 ```
-Проверка все ли зависимости встали soapysdr
+### Проверка все ли зависимости встали soapysdr
 ```bash
 sudo ldconfig
 SoapySDRUtil --info
@@ -52,7 +52,7 @@ cmake ..
 make
 sudo make install
 ```
-Проверка все ли зависимости встали SoapyAirspy
+### Проверка все ли зависимости встали SoapyAirspy
 ```bash
 SoapySDRUtil --probe="driver=airspy"
 ```
