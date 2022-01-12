@@ -7,18 +7,16 @@
 2. Настройка сенсоров.
 3. Проверка работы записи файлов на сдр.
 4. Постройка маршрута полета дрона, для записи данных.  
-5. 
+
 ## Список необходимого оборудования:
 1. Ноутбук с предустановленным ПО.
 2. Дрон от компании COEX "Clover Code".
 3. Станция приема данных(приемная антенна, мшу, raspberry и тд.)
 4. Отражающее зеркало(поправьте пожалуйста, на необходимый термин)
 5. Карта матовых Aruco маркеров на радио-прозрачном материале.  
-6. 
-## Ссылки:
-Ссылка на вебинары: https://disk.yandex.ru/d/V-6W4ZBmIXW2ig
-Ссылка на файлы симулятора Gazebo: https://disk.yandex.ru/d/ZhsWwNCgPYwffQ
-Ссылка на установку симулятора Gazebo: https://github.com/petayyyy/Nti/tree/main/Gazebo
-Ссылка на статью о прошлом проекта: https://lorett.org/news/31_08_2021_intera_2021_sostoialsia_final_napravlieniia_kosmichieskaia_razviedka_
 
- 
+## Ссылки:
+* Ссылка на вебинары: https://disk.yandex.ru/d/V-6W4ZBmIXW2ig
+* Ссылка на файлы симулятора Gazebo: https://disk.yandex.ru/d/ZhsWwNCgPYwffQ
+* Ссылка на установку симулятора Gazebo: https://github.com/petayyyy/Nti/tree/main/Gazebo
+* Ссылка на статью о прошлом проекта: https://lorett.org/news/31_08_2021_intera_2021_sostoialsia_final_napravlieniia_kosmichieskaia_razviedka_
