@@ -1,25 +1,24 @@
 # Сборка SoapySdr
 ### Для запуска кода необходимо устаноить все зависимости и библиотеки:
-always update
+## Обновим зависимости и установим pothos
 ```bash
 sudo apt-get update
-```
-```bash
 sudo apt-get install python3-pothos
 ```
-python3 language bindings
+## Поставим soapysdr и numpy для python3
 ```bash
 sudo apt-get install python3-soapysdr python3-numpy
 ```
-airspy support:
+## Устновим airspy со всеми зависимостями
 ```bash
 sudo apt-get install airspy soapysdr-module-airspy
 ```
-print information about the install
+## Проверим все ли установилось
 ```bash
 PothosUtil --system-info
 SoapySDRUtil --info
 ```
+## Поставим soapysdr на систему для дальнейшей записи данных
 ```bash
 cd catkin_ws/src/
 git clone https://github.com/pothosware/SoapySDR.git
@@ -31,9 +30,9 @@ cmake ..
 make -j4
 sudo make install
 ```
-## Проверка все ли зависимости встали SoapySdr
+## Проверка все ли зависимости встали soapysdr
 ```bash
-sudo ldconfig #needed on debian systems
+sudo ldconfig
 SoapySDRUtil --info
 ```
 ## Подготовка к установке SoapyAirspy
