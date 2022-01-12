@@ -27,7 +27,7 @@ with open(latest_file, "r") as f:
         if k == 5: x_apogee, y_apogee = map(float, i.split())
         if k >= 8:    d.append([*[int(j) for j in i.split()[0].split(":")], float(i.split()[-2]), float(i.split()[-1])])        
 
-with open('/home/pi/config.py', 'w') as fw:
+with open('/home/pi/Lorett/config.py', 'w') as fw:
     fw.write("data = ")
     json.dump(d, fw)
     fw.writelines("\nx_apogee, y_apogee, zz = {0}, {1}, {2}".format(x_apogee, y_apogee, zz))
