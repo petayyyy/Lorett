@@ -60,11 +60,6 @@ SoapySDRUtil --probe="driver=airspy"
 ```
 ## Установка недостающих библиотек
 ```bash
-cd Lorett
-pip3 install -r requirements.txt
-```
-# Или если нет установленного репозитория Lorett, то
-```bash
 pip3 install thread6
 sudo apt-get install python3-matplotlib
 sudo apt-get install python3-pothos
