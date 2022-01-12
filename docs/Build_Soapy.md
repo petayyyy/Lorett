@@ -1,46 +1,18 @@
 # Сборка SoapySdr
 ### Для запуска кода необходимо устаноить все зависимости и библиотеки:
-core framework and toolkits (required)
-```bash
-sudo add-apt-repository -y ppa:pothosware/framework
-```
-support libraries for pothos (required)
-```bash
-sudo add-apt-repository -y ppa:pothosware/support
-```
-supplies soapysdr, and drivers (optional)
-```bash
-sudo add-apt-repository -y ppa:myriadrf/drivers
-```
-needed when using bladerf devices
-```bash
-sudo add-apt-repository -y ppa:bladerf/bladerf
-```
-needed when using usrp devices
-```bash
-sudo add-apt-repository -y ppa:ettusresearch/uhd
-```
-always update after adding PPAs
+always update
 ```bash
 sudo apt-get update
 ```
 ```bash
 sudo apt-get install python3-pothos
 ```
-install development files for python blocks
-```bash
-sudo apt-get install pothos-python-dev
-```
-soapy sdr runtime and utilities
-```bash
-sudo apt-get install soapysdr-tools
-```
 python3 language bindings
 ```bash
 sudo apt-get install python3-soapysdr python3-numpy
 ```
-```bash
 airspy support:
+```bash
 sudo apt-get install airspy soapysdr-module-airspy
 ```
 print information about the install
@@ -93,9 +65,9 @@ pip3 install -r requirements.txt
 ```
 # Или если нет установленного репозитория Lorett, то
 ```bash
-sudo apt-get update -y
-sudo apt-get install -y python3-scipy
-pip3 install matplotlib
+pip3 install thread6
+sudo apt-get install python3-matplotlib
 sudo apt-get install python3-pothos
 sudo apt-get install python3-soapysdr python3-numpy
+sudo apt-get install python3-scipy
 ```
