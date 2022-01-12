@@ -1,73 +1,24 @@
-# Сборка SoapySdr
-### Для запуска кода необходимо устаноить все зависимости и библиотеки:
-always update
-```bash
-sudo apt-get update
-```
-```bash
-sudo apt-get install python3-pothos
-```
-python3 language bindings
-```bash
-sudo apt-get install python3-soapysdr python3-numpy
-```
-airspy support:
-```bash
-sudo apt-get install airspy soapysdr-module-airspy
-```
-print information about the install
-```bash
-PothosUtil --system-info
-SoapySDRUtil --info
-```
-```bash
-cd catkin_ws/src/
-git clone https://github.com/pothosware/SoapySDR.git
-cd SoapySDR
-git pull origin master
-mkdir build
-cd build
-cmake ..
-make -j4
-sudo make install
-```
-## Проверка все ли зависимости встали SoapySdr
-```bash
-sudo ldconfig #needed on debian systems
-SoapySDRUtil --info
-```
-## Подготовка к установке SoapyAirspy
-```bash
-cd ../..
-cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DLIB_INSTALL_DIR:PATH=lib64 -DLIB_SUFFIX=64 -DSOAPY_SDR_ROOT=/usr ..
-sudo add-apt-repository -y ppa:myriadrf/drivers
-sudo apt-get update
-sudo apt-get install airspy libairspy-dev
-```
-## Установка SoapyAirspy
-```bash
-git clone https://github.com/pothosware/SoapyAirspy.git
-cd SoapyAirspy
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
-```
-## Проверка все ли зависимости встали SoapyAirspy
-```bash
-SoapySDRUtil --probe="driver=airspy"
-```
-## Установка недостающих библиотек
-```bash
-cd Lorett
-pip3 install -r requirements.txt
-```
-# Или если нет установленного репозитория Lorett, то
-```bash
-pip3 install thread6
-sudo apt-get install python3-matplotlib
-sudo apt-get install python3-pothos
-sudo apt-get install python3-soapysdr python3-numpy
-sudo apt-get install python3-scipy
-```
+# Copter for space
+## Прикладная задача:
+В современном мире необходимо обрабатывать данные с метеорологических спутников в условиях повышенной мобильности. Поэтому наше направление предлагает создать и настроить комплекс оборудования, базирующемся на дроне, для приема и записи данных со спутника.  
+
+## Этапы работы:
+1. Настройка параметров полетного контроллера под дрон с полезной нагрузкой (возможно настройка камеры).
+2. Настройка сенсоров.
+3. Проверка работы записи файлов на сдр.
+4. Постройка маршрута полета дрона, для записи данных.  
+5. 
+## Список необходимого оборудования:
+1. Ноутбук с предустановленным ПО.
+2. Дрон от компании COEX "Clover Code".
+3. Станция приема данных(приемная антенна, мшу, raspberry и тд.)
+4. Отражающее зеркало(поправьте пожалуйста, на необходимый термин)
+5. Карта матовых Aruco маркеров на радио-прозрачном материале.  
+6. 
+## Ссылки:
+Ссылка на вебинары: https://disk.yandex.ru/d/V-6W4ZBmIXW2ig
+Ссылка на файлы симулятора Gazebo: https://disk.yandex.ru/d/ZhsWwNCgPYwffQ
+Ссылка на установку симулятора Gazebo: https://github.com/petayyyy/Nti/tree/main/Gazebo
+Ссылка на статью о прошлом проекта: https://lorett.org/news/31_08_2021_intera_2021_sostoialsia_final_napravlieniia_kosmichieskaia_razviedka_
+
+ 
