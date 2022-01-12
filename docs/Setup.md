@@ -20,7 +20,8 @@
 ![1111](https://user-images.githubusercontent.com/47917455/149168671-4dca6fc2-ac6f-4db5-9023-3118fb95ca9e.png)
 Рис.1  
   
-Более подробная документация по настройке находиться по [ссылке](https://clover.coex.tech/ru/setup.html)
+Более подробная документация по настройке находиться по [ссылке](https://clover.coex.tech/ru/setup.html).  
+
 ***Вместо ручного внесения значений параметров можно импортировать параметры дрона из подготовленного файла. Для этого необходимо нажать на кнопку "Tool", выбрать "Load from file" и выбрать файл [Stable_param.params](https://github.com/petayyyy/Lorett/blob/main/FCU/Stable_param.params) (Рис.2). После этого все параметры импортируются на полетный контроллер.***
 ![1111](https://user-images.githubusercontent.com/47917455/149168440-837ca9cf-20eb-4578-bccb-147d72cff9a6.png)
 Рис.2  
