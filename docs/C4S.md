@@ -26,7 +26,7 @@ git clone https://github.com/petayyyy/Lorett.git
 ```bash
 cd Lorett
 ```
-В этом репозитории лежат файлы:
-*Зависания в зените спутника [fly_zzen.py](https://github.com/petayyyy/Lorett/blob/main/fly_zzen.py).
-*Пролет по траектории спутника [fly_track.py](https://github.com/petayyyy/Lorett/blob/main/fly_track.py).
-*Создание трека, в соответствии с выбранным спутником для определенного места (изменяются данные широты, долготы и высоты над уровнем моря в файле)  [getPass_file.py](https://github.com/petayyyy/Lorett/blob/main/getPass_file.py).
+В этом репозитории лежат файлы:  
+*Зависания в зените спутника [fly_zzen.py](https://github.com/petayyyy/Lorett/blob/main/fly_zzen.py).  
+*Пролет по траектории спутника [fly_track.py](https://github.com/petayyyy/Lorett/blob/main/fly_track.py).  
+*Создание трека, в соответствии с выбранным спутником для определенного места (изменяются данные широты, долготы и высоты над уровнем моря в файле)  [getPass_file.py](https://github.com/petayyyy/Lorett/blob/main/getPass_file.py).  
