@@ -1,0 +1,15 @@
+# Table of contents
+
+* [Copter for space](README.md)
+* [🤔 Как это работает?](how-it's-works.md)
+* [ChAruco](charuco/README.md)
+  * [https://calib.io/pages/camera-calibration-pattern-generator](ChAruco/READE.md)
+* [docs](docs/README.md)
+  * [Build\_SatDump](docs/Build\_SatDump.md)
+  * [Сборка SoapySdr](docs/Build\_Soapy.md)
+  * [Copter for space](docs/Info.md)
+  * [Руководство по установке ПО, необходимого для работы комплекса](docs/Installing\_software.md)
+  * [Руководство по настройке оборудования.](docs/Setup.md)
+* [📃 Постобработка](postobrabotka/README.md)
+  * [Start](postobrabotka/start.md)
+  * [Raspberry conect usb hard disk](postobrabotka/hard\_disk.md)
