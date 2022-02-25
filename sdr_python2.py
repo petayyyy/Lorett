@@ -71,7 +71,7 @@ class OSMO_SDR:   ## Soapy based SDR class
 		self.rssi = 0.0
 		self.rssi_log = []
 		self.noise_level = 0.0
-		self.calibrated_at = datetime.datetime.utcnow() #last fix of self.noise_level
+		self.calibrated_at = datetime.utcnow() #last fix of self.noise_level
 		#
 		self.spectr_F = None
 		self.spectr_PSD = None
@@ -324,7 +324,7 @@ def test_sdr(satellite, length):
 		sdr.calibrate(satellite)
 		time.sleep(1)
 		
-		fileName = "{1:%Y%m%d_%H%M%S}_{0}".format(satellite, datetime.datetime.utcnow())
+		fileName = "{1:%Y%m%d_%H%M%S}_{0}".format(satellite, datetime.utcnow())
 
 		sdr.start("{0}.iq".format(fileName),"{0}.iq.log".format(fileName),"")
 		time.sleep(length)
@@ -336,7 +336,7 @@ def test_sdr(satellite, length):
 
 
 if __name__ == '__main__':
-	test_sdr(sys.argv[0], int(sys.argv[1]))
+	#test_sdr(sys.argv[0], int(sys.argv[1]))
 	a = ["METOP-B", 170]
 	test_sdr(a[0],a[1])
 
