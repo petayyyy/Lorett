@@ -27,7 +27,7 @@ Options:
   -h, --help             Show correct format parameters.
   --s=<name>             Name of satellite you recording [default: calibr].
   --t=<sec>              Time recording track your satellite [default: 120].
-  --p=<name>             Name of tracks path [default: ~/tracks].
+  --p=<name>             Name of tracks path [default: tracks].
   --out_iq=<bool>        Flag creating iq file with data recording [default: True].
   --out_log=<bool>       Flag creating log file with signal data [default: True].
   --out_con=<bool>       Flag printing console useless data [default: True].
@@ -230,10 +230,7 @@ class OSMO_SDR:   ## Soapy based SDR class
         if self.verbose : print ("////Stop SDR//// {}".format(self.state))
         pass
 
-    def calibrate(self,config='calibr'):
-        if not self.load_config(config):
-            if self.verbose : print ("Failed to load calibration config [{}]".format(config))
-            return False
+    def calibrate(self):
         buff = numpy.array([0]*1024*32, numpy.complex64)
         #--activate streaming
         rxStream = self.sdr.setupStream(SOAPY_SDR_RX, SOAPY_SDR_CF32)
@@ -331,11 +328,11 @@ if __name__ == '__main__':
     sdr = OSMO_SDR(SDR_CONFIGS)
     # Configurate/calibrate sdr by name of satellite
     if sdr.load_config(satellite): 
-        sdr.calibrate(satellite)
+        sdr.calibrate()
         # Start recording some signal by satellite
         if input("\nPress any key to continue ") == '0': exit()
         # Generate file name of path recording
-        fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(satellite, datetime.utcnow())
+        fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(sdr.config_name.replace(" ", "_"), datetime.utcnow())
         # Create path for all signals, if we don't have
         if not os.path.exists(path): os.makedirs(path) 
         # Create path for now signal
