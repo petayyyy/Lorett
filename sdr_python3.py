@@ -13,11 +13,15 @@ from docopt import docopt
 
 USAGE = '''
 
-sdr_recording - Script for recording signal by meteorolog satellite.
+sdr_python3 - Script for recording signal by meteorolog satellite.
+
+Example:
+  sdr_python3.py --s 'Noaa 19' --t 100
 
 Usage:
-  test_docopt.py [--s=<name>] [--t=<sec>] [--p=<name>] [--out_iq=<bool>] [--out_log=<bool>] [--out_con=<bool>] 
-  test_docopt.py -h | --help
+  sdr_python3.py [--s=<name>] [--t=<sec>] [--p=<name>] [--out_iq=<bool>] [--out_log=<bool>] [--out_con=<bool>] 
+  sdr_python3.py -h | --help
+  ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
 
 Options:
   -h, --help             Show correct format parameters.
@@ -29,14 +33,6 @@ Options:
   --out_con=<bool>       Flag printing console useless data [default: True].
 
 '''
-
-# Put your name of satellite and track's time
-satellite = "MB"
-# Put your track's time
-time_recording = 170
-# Put name of data path
-path = "tracks"
-
 SDR_CONFIGS = {
     'calibr' : { 'freq': 137e6, 'rssi_freq': [137e6,137e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 }, #default calibration
     'NOAA 18' : { 'freq': 1707.0e6, 'rssi_freq': [1707.3e6,1707.7e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 },
@@ -334,20 +330,22 @@ if __name__ == '__main__':
     # Start work with airspy-sdr
     sdr = OSMO_SDR(SDR_CONFIGS)
     # Configurate/calibrate sdr by name of satellite
-    if sdr.load_config(satellite): sdr.calibrate(satellite)
-    # Start recording some signal by satellite
-    input("\nPress any key to continue")
-    # Generate file name of path recording
-    fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(satellite, datetime.utcnow())
-    # Create path for all signals, if we don't have
-    if not os.path.exists(path): os.makedirs(path) 
-    # Create path for now signal
-    os.mkdir("{0}/{1}".format(path,fileName))
-    # Generate file name of file recording
-    fileName = "{0}/{1}/{2}".format(path, fileName, fileName)
-    # Start recording signal
-    sdr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
-    # Wait untill we see satellite
-    time.sleep(time_recording)
-    # Stop recording, end of all process
-    sdr.stop()
+    if sdr.load_config(satellite): 
+        sdr.calibrate(satellite)
+        # Start recording some signal by satellite
+        if input("\nPress any key to continue ") == '0': exit()
+        # Generate file name of path recording
+        fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(satellite, datetime.utcnow())
+        # Create path for all signals, if we don't have
+        if not os.path.exists(path): os.makedirs(path) 
+        # Create path for now signal
+        os.mkdir("{0}/{1}".format(path,fileName))
+        # Generate file name of file recording
+        fileName = "{0}/{1}/{2}".format(path, fileName, fileName)
+        # Start recording signal
+        sdr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
+        # Wait untill we see satellite
+        time.sleep(time_recording)
+        # Stop recording, end of all process
+        sdr.stop()
+    else: print("Bye bye")
