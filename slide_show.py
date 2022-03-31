@@ -13,7 +13,7 @@ USAGE = '''
 slaid_show - Script for watching decoding images from meteorological satellites.
 
 Example:
-  rosrun lorett slaid_show.py --s 'Noaa 19' --t 100
+  rosrun lorett slaid_show.py --in 'Noaa 19' --t 1
   rosrun lorett slaid_show.py -a | --auto
   rosrun lorett slaid_show.py -h | --help
   ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
