@@ -51,3 +51,9 @@ sudo pip3 download -d $path/Mako3 Mako
 echo "Download Pyorbital for generate list of satellite"
 sudo pip download -d $path/pyorbital pyorbital
 sudo pip3 download -d $path/pyorbital3 pyorbital
+
+echo "Download all git repositories"
+git clone https://github.com/pothosware/SoapySDR.git
+git clone https://github.com/pothosware/SoapyAirspy.git
+git clone https://github.com/nanomsg/nng.git
+git clone https://github.com/altillimity/satdump.git
