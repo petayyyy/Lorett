@@ -24,6 +24,7 @@ sudo apt download -y --fix-missing python3-numpy
 
 echo "Download all packeges and libs for SatDump"
 sudo apt download -y --fix-missing git
+sudo apt-get install -y --fix-missing git
 sudo apt download -y --fix-missing build-essential
 sudo apt download -y --fix-missing cmake
 sudo apt download -y --fix-missing g++
