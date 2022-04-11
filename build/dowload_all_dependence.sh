@@ -3,9 +3,11 @@
 echo "Create path for all dependence and libs"
 mkdir Dependence && cd Dependence
 path=`pwd`
-sudo chown -R _apt:root /var/lib/apt/lists
 
-echo "Downloading all dependence and libs for sdr"
+echo "Preparation before installing packages and libs"
+sudo apt update
+
+echo "Downloading all packages and libs for sdr"
 sudo apt download -y --fix-missing airspy
 sudo apt download -y --fix-missing soapysdr-module-airspy
 sudo apt download -y --fix-missing soapysdr-tools
@@ -16,11 +18,15 @@ sudo apt download -y --fix-missing python-scipy
 sudo apt download -y --fix-missing python-matplotlib
 sudo apt download -y --fix-missing python-soapysdr
 sudo apt download -y --fix-missing python-numpy
+sudo apt download -y --fix-missing python-mako
+sudo apt download -y --fix-missing python-pyorbital
 
 sudo apt download -y --fix-missing python3-scipy
 sudo apt download -y --fix-missing python3-matplotlib
 sudo apt download -y --fix-missing python3-soapysdr
 sudo apt download -y --fix-missing python3-numpy
+sudo apt download -y --fix-missing python3-mako
+sudo apt download -y --fix-missing python3-pyorbital
 
 echo "Download all packeges and libs for SatDump"
 sudo apt download -y --fix-missing git
@@ -45,16 +51,12 @@ sudo apt download -y --fix-missing libglu1-mesa-dev
 sudo apt download -y --fix-missing freeglut3-dev
 sudo apt download -y --fix-missing mesa-common-dev       
 
-echo "Download Mako for SatDump"
-sudo pip download -d $path/Mako Mako
-sudo pip3 download -d $path/Mako3 Mako
-
-echo "Download Pyorbital for generate list of satellite"
-sudo pip download -d $path/pyorbital pyorbital
-sudo pip3 download -d $path/pyorbital3 pyorbital
-
 echo "Download all git repositories"
 git clone https://github.com/pothosware/SoapySDR.git
 git clone https://github.com/pothosware/SoapyAirspy.git
 git clone https://github.com/nanomsg/nng.git
 git clone https://github.com/altillimity/satdump.git
+
+echo "Create tar for moving path with all dependence"
+cd ..
+tar cvfz Dependence.tgz Dependence
