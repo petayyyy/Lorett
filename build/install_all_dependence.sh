@@ -83,7 +83,8 @@ start_buid_without_internet () {
     sudo apt-get install -y --fix-missing ./Dependence/libglu1-mesa-dev
     sudo apt-get install -y --fix-missing ./Dependence/freeglut3-dev
     sudo apt-get install -y --fix-missing ./Dependence/mesa-common-dev       
-    pip$pyv install -y ./Dependence/Mako
+
+    sudo pip$pyv install ./Dependence/Mako$pyv/Mako* --no-index
 }
 
 check_python_version
