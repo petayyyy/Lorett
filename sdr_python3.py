@@ -10,8 +10,10 @@ from scipy import signal
 from scipy.fftpack import fftshift
 import threading
 from docopt import docopt
-import rospy
-from clover import srv
+try:
+  import rospy
+  from clover import srv
+except: pass
 
 USAGE = '''
 
@@ -394,10 +396,12 @@ if __name__ == '__main__':
     OUTPUT_CON_FLAG = bool(opts['--out_con'])
 
     if bool(opts['--auto']):
-        rospy.init_node('sdr_test')
-        s = rospy.Service('sdr_recorder_ros', srv.sdr_recorder_ros, sdr_work_server) #////////////////////////////////////////////
-        print("Ready sdr recorder")
-        rospy.spin()
+        try:
+          rospy.init_node('sdr_test')
+          s = rospy.Service('sdr_recorder_ros', srv.sdr_recorder_ros, sdr_work_server) #////////////////////////////////////////////
+          print("Ready sdr recorder")
+          rospy.spin()
+        except: pass
     else:
         # Start work with airspy-sdr
         sdr = OSMO_SDR(SDR_CONFIGS)
