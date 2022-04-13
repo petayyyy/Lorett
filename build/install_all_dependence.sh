@@ -39,6 +39,7 @@ start_buid_internet () {
     sudo apt-get install -y --fix-missing python$pyv-matplotlib
     sudo apt-get install -y --fix-missing python$pyv-soapysdr
     sudo apt-get install -y --fix-missing python$pyv-numpy
+    sudo apt-get install -y --fix-missing python$pyv-docopt
 
     echo "Install all packeges and libs for SatDump"
     sudo apt-get install -y --fix-missing git build-essential cmake g++ pkgconf libfftw3-dev libvolk2-dev libjpeg-dev libpng-dev 
@@ -61,6 +62,7 @@ start_buid_without_internet () {
     sudo apt-get install -y --fix-missing ./Dependence/python$pyv-matplotlib
     sudo apt-get install -y --fix-missing ./Dependence/python$pyv-soapysdr
     sudo apt-get install -y --fix-missing ./Dependence/python$pyv-numpy
+    sudo apt-get install -y --fix-missing ./Dependence/python$pyv-docopt
 
     echo "Install all packeges and libs for SatDump"
     sudo apt-get install -y --fix-missing ./Dependence/git
