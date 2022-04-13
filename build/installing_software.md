@@ -39,6 +39,7 @@ start_buid_internet () {
     sudo apt-get install -y --fix-missing python$pyv-matplotlib
     sudo apt-get install -y --fix-missing python$pyv-soapysdr
     sudo apt-get install -y --fix-missing python$pyv-numpy
+    sudo apt-get install -y --fix-missing python$pyv-docopt
 }
 start_buid_without_internet () {
     echo "Installing all dependence and libs without internet"
@@ -52,6 +53,7 @@ start_buid_without_internet () {
     sudo apt-get install -y --fix-missing ./Dependence/python$pyv-matplotlib
     sudo apt-get install -y --fix-missing ./Dependence/python$pyv-soapysdr
     sudo apt-get install -y --fix-missing ./Dependence/python$pyv-numpy
+    sudo apt-get install -y --fix-missing ./Dependence/python$pyv-docopt
 }
 
 check_python_version
