@@ -146,7 +146,7 @@ chmod +x ./satdump
 
 echo "Make Satdum global name"
 cd ~
-text="alias ./satdump='sh /catkin_ws/src/Lorett/satdump/satdump'"
+text="export PATH=$PATH:/home/pi/catkin_ws/src/Lorett/satdump/build"
 name=`tail -1 '.bashrc'`
 if [[ $name == $text ]] ; then
     echo "OK"
