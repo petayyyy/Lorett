@@ -8,11 +8,4 @@ then
     pyv="$(python3 -V)" 
 fi
 echo $pyv
-
-if [[ *"2."* == "$pyv" ]] ;then
-pyv=''
-else
-pyv='3'
-fi
-
-#sudo apt-get install python$pyv-numpy -y
+if [[ "$pyv" == *2.* ]] ; then pyv="" ; else pyv="3"; fi
