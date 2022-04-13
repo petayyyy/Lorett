@@ -9,7 +9,7 @@ then
 fi
 echo $pyv
 
-if [[ *"2."* != "$pyv" ]] ;then
+if [[ *"2."* == "$pyv" ]] ;then
 pyv=''
 else
 pyv='3'
