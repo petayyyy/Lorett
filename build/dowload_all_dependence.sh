@@ -20,6 +20,7 @@ sudo apt download -y --fix-missing python-soapysdr
 sudo apt download -y --fix-missing python-numpy
 sudo apt download -y --fix-missing python-mako
 sudo apt download -y --fix-missing python-pyorbital
+sudo apt download -y --fix-missing python-docopt
 
 sudo apt download -y --fix-missing python3-scipy
 sudo apt download -y --fix-missing python3-matplotlib
@@ -27,6 +28,7 @@ sudo apt download -y --fix-missing python3-soapysdr
 sudo apt download -y --fix-missing python3-numpy
 sudo apt download -y --fix-missing python3-mako
 sudo apt download -y --fix-missing python3-pyorbital
+sudo apt download -y --fix-missing python3-docopt
 
 echo "Download all packeges and libs for SatDump"
 sudo apt download -y --fix-missing git
