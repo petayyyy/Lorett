@@ -19,11 +19,11 @@ Example:
   ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
 
 Usage:
-  sdr_python3.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>]  
-  sdr_python3.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>] -l | --last
-  sdr_python3.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>] -m | --max
-  sdr_python3.py -h | --help
-  sdr_python3.py -a | --auto
+  slaid_show.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>]  
+  slaid_show.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>] -l | --last
+  slaid_show.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>] -m | --max
+  slaid_show.py -h | --help
+  slaid_show.py -a | --auto
 
 Options:
   -h, --help             Show correct format parameters.
