@@ -16,25 +16,25 @@ import json
 
 USAGE = '''
 
-sdr_python3 - Script for recording signal by meteorolog satellite.
+getPass - Script for generate list meteorolog satellite.
 
 Example:
-  sdr_python3.py --s 'Noaa 19' --t 100
-  sdr_python3.py -a | --auto
-  sdr_python3.py -h | --help
+  getPass.py --lat 55.45 --lon 37.90 --alt 0.180 --t 10 
+  getPass.py -a | --auto
+  getPass.py -h | --help
   ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
 
 Usage:
-  sdr_python3.py [--s='<name>'] [--t=<sec>] [--p=<name>] [--out_iq=<bool>] [--out_log=<bool>] [--out_con=<bool>]
-  sdr_python3.py -h | --help
-  sdr_python3.py -a | --auto
+  getPass.py [--azim=<num>] [--alt=<num>] [--t=<sec>] [--lon=<num>] [--lat=<num>] [--name_st='<name>'] [--out_log=<bool>] [--out_con=<bool>]
+  getPass.py -h | --help
+  getPass.py -a | --auto
 
 Options:
   -h, --help             Show correct format parameters.
   -a, --auto             Flag working in autonov secions.
   --t=<hour>             Parametr to find some satellite in time [default: 30].
   --lon=<num>            Name of satellite you recording [default: 37.498770].
-  --lan=<num>            Time recording track your satellite [default: 55.930620].
+  --lat=<num>            Time recording track your satellite [default: 55.930620].
   --azim=<num>           Name of tracks path [default: 0].
   --alt=<num>            Hight on Earth by sea [default: 0.184]
   --name_st='<name>'     Name station [default: 'C4S-007'].
@@ -133,16 +133,15 @@ def get_pass_server(req):
 if __name__ == '__main__':
     opts = docopt(USAGE)
     hour = int(opts['--t'])
-    path = opts['--path']
-    name_statiion = opts['name_st']
+    name_statiion = opts['--name_st']
     lon= float(opts['--lon'])
     lat =  float(opts['--lat'])
     azimuth_correction = int(opts['--azim'])
     alt = float(opts['--alt'])
-    is_create_python_file = bool(opts['--cr_py'])
+    #is_create_python_file = bool(opts['--cr_py'])
     if not bool(opts['--auto']):
         # Generate data about your placement
-        station = Station(name_station, lon = lon, lat = lat, azimuthCorrection = azimuth_correction, alt = alt)
+        station = Station(name_statiion, lon = lon, lat = lat, azimuthCorrection = azimuth_correction, alt = alt)
         # Generate track
         station.findPasses(datetime.utcnow(), hour, saveTrack=True, printTrack= False)
 
