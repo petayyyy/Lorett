@@ -949,9 +949,10 @@ class Station:
         table = PrettyTable(th)
         for i in td:
             table.add_row(i)
-
-        print(table.get_string())
-
+        try:
+            print(table.get_string())
+        except:
+            print(table.get_string().encode('utf8', 'ignore'))
         # console track generator
         if input("\nCreate track-file ? (y/n) ").lower() == "y":
 
@@ -972,6 +973,3 @@ class Station:
                     
             else:
                 print("Format is not recognized")
-
-
-
