@@ -19,9 +19,9 @@ USAGE = '''
 getPass - Script for generate list meteorolog satellite.
 
 Example:
-  getPass.py --lat 55.45 --lon 37.90 --alt 0.180 --t 10 
-  getPass.py -a | --auto
-  getPass.py -h | --help
+  python getPass.py --lat 55.45 --lon 37.90 --alt 0.180 --t 10 
+  python getPass.py -a | --auto
+  python getPass.py -h | --help
   ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
 
 Usage:
