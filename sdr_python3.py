@@ -20,9 +20,9 @@ USAGE = '''
 sdr_python3 - Script for recording signal by meteorolog satellite.
 
 Example:
-  sdr_python3.py --s 'Noaa 19' --t 100
-  sdr_python3.py -a | --auto
-  sdr_python3.py -h | --help
+  python sdr_python3.py --s 'Noaa 19' --t 100
+  python sdr_python3.py -a | --auto
+  python sdr_python3.py -h | --help
   ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
 
 Usage:
