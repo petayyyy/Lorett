@@ -57,7 +57,11 @@ class Slaid_show:
         images, flag = [], False
         if os.path.exists(path):
             for file in os.listdir(path):
-                if os.path.isdir(path+"/"+file):
+                if not os.path.isdir(path+"/"+file):
+                    if ".png" in file or ".jpg" in file:
+                            images.append(file)
+                            flag = True 
+                else: 
                     for pictures in os.listdir(path+"/"+file):
                         if ".png" in pictures or ".jpg" in pictures:
                             images.append(file+"/"+ str(pictures))
@@ -65,6 +69,7 @@ class Slaid_show:
             if flag == False:
                 print("Yours path is empty")
             return images
+        return path
     def search_max_memory_object(self, path, is_problem = True, is_dir = True, is_file = True):
         max_memory = 0
         name = 'error'
@@ -123,14 +128,16 @@ class Slaid_show:
                 cv2.imshow(self.name_window, img)
                 cv2.waitKey(0)
     def start(self):
-        images = self.search_images(self.in_path)
-        for name in images:
-            try:
+        try:
+            images = self.search_images(self.in_path)
+            print(self.in_path)
+            print(images)
+            for name in images:
                 img = cv2.imread(self.in_path+"/"+name)
                 print("Took picture from file {}".format(name))
                 imgg = self.pictures_naming(img, name)
                 self.publish(imgg)
-            except Exception as e: print(e)
+        except Exception as e: print(e)
 def slaid_work_server(req):
     try:
         if req.action == "start":
@@ -185,9 +192,11 @@ if __name__ == '__main__':
         if bool(opts['--last']):
             # find last creating path or file in correct directory
             work.in_path = work.search_last_created_object(path = input_path)
+            print(work.in_path)
             if os.path.isdir(work.in_path):
+                print(11)
                 work.start()
-            else:
+            elif work.in_path != "error":
                 work.publish(work.in_path)
         elif bool(opts['--max']):
             # find max memory path or file in correct directory
@@ -198,4 +207,5 @@ if __name__ == '__main__':
                 work.publish(work.in_path)
         else:
             #work = Slaid_show(in_path = input_path, time_delay = time_delay, pub_in_topic = pub_in_topic, pub_in_console = pub_in_console)
+            work.in_path = input_path
             work.start()
