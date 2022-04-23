@@ -25,7 +25,7 @@ Example:
   ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
 
 Usage:
-  getPass_file.py [--azim=<num>] [--alt=<num>] [--t=<sec>] [--lon=<num>] [--lat=<num>] [--name_st='<name>'] [--out_log=<bool>] [--out_con=<bool>]
+  getPass_file.py [--azim=<num>] [--alt=<num>] [--t=<sec>] [--lon=<num>] [--lat=<num>] [--name_st='<name>'] [--cr_py=<bool>] [--out_log=<bool>] [--out_con=<bool>]
   getPass_file.py -h | --help
   getPass_file.py -a | --auto
 
@@ -138,7 +138,8 @@ if __name__ == '__main__':
     lat =  float(opts['--lat'])
     azimuth_correction = int(opts['--azim'])
     alt = float(opts['--alt'])
-    #is_create_python_file = bool(opts['--cr_py'])
+    path = 'tracks'
+    is_create_python_file = bool(opts['--cr_py'])
     if not bool(opts['--auto']):
         # Generate data about your placement
         station = Station(name_statiion, lon = lon, lat = lat, azimuthCorrection = azimuth_correction, alt = alt)
@@ -158,7 +159,7 @@ if __name__ == '__main__':
                 if k == 5: x_apogee, y_apogee = map(float, i.split())
                 if k >= 8:    d.append([*[int(j) for j in i.split()[0].split(":")], float(i.split()[-2]), float(i.split()[-1])])        
         if is_create_python_file:
-            with open('/home/pi/Lorett/config.py', 'w') as fw:
+            with open('config.py', 'w') as fw:
                 fw.write("data = ")
                 json.dump(d, fw)
                 fw.writelines("\nx_apogee, y_apogee, zz = {0}, {1}, {2}".format(x_apogee, y_apogee, zz))
