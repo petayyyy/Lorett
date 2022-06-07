@@ -31,3 +31,5 @@ cd Dependence
 ```bash
 bash ./check_python_version.sh
 ```
+![image](https://user-images.githubusercontent.com/47917455/172495093-6718f3ff-1421-4856-92b2-6ddf1f74c5bd.png)
+
