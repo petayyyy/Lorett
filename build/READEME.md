@@ -26,3 +26,8 @@ cd Depence
 ```bash
 cd Depence
 ```
+## Запуск скрипта для просмотра системной версии python.   
+Для скачивания, необходимо ввести команду:  
+```bash
+bash ./check_python_version.sh
+```
