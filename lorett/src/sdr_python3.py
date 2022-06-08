@@ -15,12 +15,12 @@ from clover import srv
 
 USAGE = '''
 
-sdr_python3 - Script for recording a signal from meteorological satellites.
+sdr_python3 - Script for recording signal by meteorolog satellite.
 
 Example:
-  rosrun lorett sdr_python3.py --s 'Noaa 19' --t 100
-  rosrun lorett sdr_python3.py -a | --auto
-  rosrun lorett sdr_python3.py -h | --help
+  python sdr_python3.py --s 'Noaa 19' --t 100
+  python sdr_python3.py -a | --auto
+  python sdr_python3.py -h | --help
   ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
 
 Usage:
@@ -33,7 +33,7 @@ Options:
   -a, --auto             Flag working in autonov secions.
   --s='<name>'             Name of satellite you recording [default: calibr].
   --t=<sec>              Time recording track your satellite [default: 120].
-  --p=<name>             Name of tracks path [default: /home/clover/tracks].
+  --p=<name>             Name of tracks path [default: tracks].
   --out_iq=<bool>        Flag creating iq file with data recording [default: True].
   --out_log=<bool>       Flag creating log file with signal data [default: True].
   --out_con=<bool>       Flag printing console useless data [default: True].
@@ -369,6 +369,60 @@ def sdr_work_server(req):
                 os.mkdir("{0}/{1}".format(path,fileName))
                 # Generate file name of file recording
                 fileName = "{0}/{1}/{2}".format(path, fileName, fileName)
+            # Start recording signal
+            sdrr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
+            # Wait untill we see satellite
+            if req.time_recording != 0: time.sleep(req.time_recording)
+            else: time.sleep(time_recording)
+            # Stop recording, end of all process
+            sdrr.stop()
+            return srv.sdr_recorder_rosResponse(process = "start")
+        elif req.action == "kill" or req.action == "stop" or req.action == "exit":
+            sdrr = None
+            exit()
+        else: return srv.sdr_recorder_rosResponse(process = "error")
+    except:   return srv.sdr_recorder_rosResponse(process = "error")
+
+if __name__ == '__main__':
+    global satellite, time_recording, path
+    opts = docopt(USAGE)
+    satellite = opts['--s']
+    time_recording = int(opts['--t'])
+    path = opts['--p']
+    OUTPUT_IQ_FLAG = bool(opts['--out_iq'])
+    OUTPUT_LOG_FLAG = bool(opts['--out_log'])
+    OUTPUT_CON_FLAG = bool(opts['--out_con'])
+
+    if bool(opts['--auto']):
+        try:
+          rospy.init_node('sdr_test')
+          s = rospy.Service('sdr_recorder_ros', srv.Sdr_recorder_ros, sdr_work_server)
+          print("Ready sdr recorder")
+          rospy.spin()
+        except: pass
+    else:
+        # Start work with airspy-sdr
+        sdr = OSMO_SDR(SDR_CONFIGS)
+        # Configurate/calibrate sdr by name of satellite
+        if sdr.load_config(satellite): 
+            sdr.calibrate()
+            # Start recording some signal by satellite
+            if input("\nPress any key to continue ") == '0': exit()
+            # Generate file name of path recording
+            fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(sdr.config_name.replace(" ", "_"), datetime.utcnow())
+            # Create path for all signals, if we don't have
+            if not os.path.exists(path): os.makedirs(path) 
+            # Create path for now signal
+            os.mkdir("{0}/{1}".format(path,fileName))
+            # Generate file name of file recording
+            fileName = "{0}/{1}/{2}".format(path, fileName, fileName)
+            # Start recording signal
+            sdr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
+            # Wait untill we see satellite
+            time.sleep(time_recording)
+            # Stop recording, end of all process
+            sdr.stop()
+        else: print("Bye bye") fileName, fileName)
             # Start recording signal
             sdrr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
             # Wait untill we see satellite
