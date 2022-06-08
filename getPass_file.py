@@ -1,18 +1,14 @@
-import SoapySDR
-from SoapySDR import *
-import sys
 import os
 import time
 from datetime import datetime,timedelta
-import numpy
-import matplotlib.pyplot as plt
-from scipy import signal
-from scipy.fftpack import fftshift
-import threading
 from docopt import docopt
 from orbital import Station
 import glob
 import json
+try:
+  import rospy
+  from clover import srv
+except: pass
 
 USAGE = '''
 
