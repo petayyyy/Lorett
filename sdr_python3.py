@@ -398,7 +398,7 @@ if __name__ == '__main__':
     if bool(opts['--auto']):
         try:
           rospy.init_node('sdr_test')
-          s = rospy.Service('sdr_recorder_ros', srv.sdr_recorder_ros, sdr_work_server) #////////////////////////////////////////////
+          s = rospy.Service('sdr_recorder_ros', srv.Sdr_recorder_ros, sdr_work_server)
           print("Ready sdr recorder")
           rospy.spin()
         except: pass
