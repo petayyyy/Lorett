@@ -1,12 +1,14 @@
 from turtle import pu
 import cv2 
 import os
-import rospy
-from sensor_msgs.msg import Image
-from cv_bridge import CvBridge
-from clover import srv
+try:
+  import rospy
+  from sensor_msgs.msg import Image
+  from cv_bridge import CvBridge
+  from clover import srv
+  bridge = CvBridge()
+except: pass
 from docopt import docopt
-bridge = CvBridge()
 
 USAGE = '''
 
@@ -50,10 +52,10 @@ class Slaid_show:
         self.color_background = (255, 255, 255)
         self.color_text = (0, 0, 0)
         self.name_window = "Images from satellite"
-        self.bridge = CvBridge()
         if is_node:
             rospy.init_node('slaid_show_one_time')
         if self.pub_in_topic:
+            self.bridge = CvBridge()
             self.pub = rospy.Publisher("pictures_from_{}".format(self.in_path.split("/")[-1]), Image, queue_size=1000)
     def search_images(self, path):
         images, flag = [], False
@@ -190,7 +192,7 @@ if __name__ == '__main__':
         print("Ready slaid show")
         rospy.spin()
     else:
-        work = Slaid_show(pub_in_topic = pub_in_topic, pub_in_console = pub_in_console, is_node=not bool(opts['--auto']))
+        work = Slaid_show(pub_in_topic = pub_in_topic, pub_in_console = pub_in_console, is_node=pub_in_topic)
         if bool(opts['--last']):
             # find last creating path or file in correct directory
             work.in_path = work.search_last_created_object(path = input_path)
