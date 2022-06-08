@@ -42,59 +42,7 @@ Options:
 '''
 def get_pass_server(req):
     try:
-        if req.action == "calibrate":
-            # Start work with airspy-sdr
-            sdrr = OSMO_SDR(SDR_CONFIGS)
-            # Configurate/calibrate sdr by name of satellite
-            if req.satellite != '': 
-                if sdrr.load_config(req.satellite): sdrr.calibrate()
-            else: 
-                if sdrr.load_config(satellite): sdrr.calibrate()
-            return srv.sdr_recorder_rosResponse(process = "calibrate")
-        elif req.action == "generate":
-            try:
-                if sdrr == None:
-                    # Start work with airspy-sdr
-                    sdrr = OSMO_SDR(SDR_CONFIGS)
-                    # Configurate/calibrate sdr by name of satellite
-                    if req.satellite != '': 
-                        if sdrr.load_config(req.satellite): sdrr.calibrate()
-                    else: 
-                        if sdrr.load_config(satellite): sdrr.calibrate()
-                    time.sleep(1)
-            except: 
-                # Start work with airspy-sdr
-                sdrr = OSMO_SDR(SDR_CONFIGS)
-                # Configurate/calibrate sdr by name of satellite
-                if req.satellite != '': 
-                    if sdrr.load_config(req.satellite): sdrr.calibrate()
-                else: 
-                    if sdrr.load_config(satellite): sdrr.calibrate()
-                time.sleep(1)
-            # Generate file name of path recording
-            fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(sdrr.config_name.replace(" ", "_"), datetime.utcnow())
-            # Create path for all signals, if we don't have
-            if req.path != '': 
-                if not os.path.exists(req.path): os.makedirs(req.path) 
-                # Create path for now signal
-                os.mkdir("{0}/{1}".format(req.path,fileName))
-                # Generate file name of file recording
-                fileName = "{0}/{1}/{2}".format(req.path, fileName, fileName)
-            else: 
-                if not os.path.exists(path): os.makedirs(path) 
-                # Create path for now signal
-                os.mkdir("{0}/{1}".format(path,fileName))
-                # Generate file name of file recording
-                fileName = "{0}/{1}/{2}".format(path, fileName, fileName)
-            # Start recording signal
-            sdrr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
-            # Wait untill we see satellite
-            if req.time_recording != 0: time.sleep(req.time_recording)
-            else: time.sleep(time_recording)
-            # Stop recording, end of all process
-            sdrr.stop()
-            return srv.sdr_recorder_rosResponse(process = "start")
-        elif req.action == "start":
+        if req.action == "start":
             # Generate data about your placement
             station = Station(req.name_station, lon = req.lon, lat = req.lat, azimuthCorrection = req.azimuth_correction, alt = req.alt)
             # Generate track
@@ -163,7 +111,7 @@ if __name__ == '__main__':
     else:
         try:
             rospy.init_node('get_pass_test')
-            s = rospy.Service('sdr_recorder_ros', srv.get_pass_ros, get_pass_server) #////////////////////////////////////////////
+            s = rospy.Service('sdr_recorder_ros', srv.Get_pass_ros, get_pass_server) #////////////////////////////////////////////
             print("Ready generate list")
             rospy.spin()
         except: pass
