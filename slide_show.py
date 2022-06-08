@@ -2,11 +2,11 @@ from turtle import pu
 import cv2 
 import os
 try:
-  import rospy
-  from sensor_msgs.msg import Image
-  from cv_bridge import CvBridge
-  from clover import srv
-  bridge = CvBridge()
+    import rospy
+    from sensor_msgs.msg import Image
+    from cv_bridge import CvBridge
+    from clover import srv
+    bridge = CvBridge()
 except: pass
 from docopt import docopt
 
@@ -187,10 +187,12 @@ if __name__ == '__main__':
     pub_in_console = opts['--out_con']
 
     if bool(opts['--auto']):
-        rospy.init_node('slaid_show_server')
-        s = rospy.Service('Slaid_show_ros', srv.Slaid_show, slaid_work_server) #////////////////////////////////////////////
-        print("Ready slaid show")
-        rospy.spin()
+        try:
+            rospy.init_node('slaid_show_server')
+            s = rospy.Service('Slaid_show_ros', srv.Slaid_show, slaid_work_server) #////////////////////////////////////////////
+            print("Ready slaid show")
+            rospy.spin()
+        except: pass
     else:
         work = Slaid_show(pub_in_topic = pub_in_topic, pub_in_console = pub_in_console, is_node=pub_in_topic)
         if bool(opts['--last']):
