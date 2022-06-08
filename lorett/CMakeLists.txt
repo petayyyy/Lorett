@@ -110,7 +110,7 @@ add_service_files(
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-  LIBRARIES lorett
+#  LIBRARIES lorett
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
@@ -168,7 +168,7 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-catkin_install_python(PROGRAMS src/sdr_python3.py src/slaid_show.py
+catkin_install_python(PROGRAMS src/sdr_python3.py src/slaid_show.py src/get_pass.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
