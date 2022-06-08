@@ -5,25 +5,27 @@ import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 from clover import srv
-from docopt import docopt
 bridge = CvBridge()
+from docopt import docopt
 
 USAGE = '''
 
 slaid_show - Script for watching decoding images from meteorological satellites.
 
 Example:
-  rosrun lorett slaid_show.py --s 'Noaa 19' --t 100
-  rosrun lorett slaid_show.py -a | --auto
-  rosrun lorett slaid_show.py -h | --help
+  python slide_show.py --in "Metop"
+  python slide_show.py -a | --auto
+  python slide_show.py -h | --help
+  python slide_show.py --in "Metop" --max
+  python slide_show.py --in "Metop" --last
   ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
 
 Usage:
-  sdr_python3.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>]  
-  sdr_python3.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>] -l | --last
-  sdr_python3.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>] -m | --max
-  sdr_python3.py -h | --help
-  sdr_python3.py -a | --auto
+  slaid_show.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>]  
+  slaid_show.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>] -l | --last
+  slaid_show.py [--in='<name>'] [--t=<sec>] [--out_topic=<bool>] [--out_con=<bool>] -m | --max
+  slaid_show.py -h | --help
+  slaid_show.py -a | --auto
 
 Options:
   -h, --help             Show correct format parameters.
@@ -48,16 +50,20 @@ class Slaid_show:
         self.color_background = (255, 255, 255)
         self.color_text = (0, 0, 0)
         self.name_window = "Images from satellite"
-        self.bridge = CvBridge()
         if is_node:
             rospy.init_node('slaid_show_one_time')
         if self.pub_in_topic:
+            self.bridge = CvBridge()
             self.pub = rospy.Publisher("pictures_from_{}".format(self.in_path.split("/")[-1]), Image, queue_size=1000)
     def search_images(self, path):
         images, flag = [], False
         if os.path.exists(path):
             for file in os.listdir(path):
-                if os.path.isdir(path+"/"+file):
+                if not os.path.isdir(path+"/"+file):
+                    if ".png" in file or ".jpg" in file:
+                            images.append(file)
+                            flag = True 
+                else: 
                     for pictures in os.listdir(path+"/"+file):
                         if ".png" in pictures or ".jpg" in pictures:
                             images.append(file+"/"+ str(pictures))
@@ -65,6 +71,7 @@ class Slaid_show:
             if flag == False:
                 print("Yours path is empty")
             return images
+        return path
     def search_max_memory_object(self, path, is_problem = True, is_dir = True, is_file = True):
         max_memory = 0
         name = 'error'
@@ -123,14 +130,16 @@ class Slaid_show:
                 cv2.imshow(self.name_window, img)
                 cv2.waitKey(0)
     def start(self):
-        images = self.search_images(self.in_path)
-        for name in images:
-            try:
+        try:
+            images = self.search_images(self.in_path)
+            print(self.in_path)
+            print(images)
+            for name in images:
                 img = cv2.imread(self.in_path+"/"+name)
                 print("Took picture from file {}".format(name))
                 imgg = self.pictures_naming(img, name)
                 self.publish(imgg)
-            except Exception as e: print(e)
+        except Exception as e: print(e)
 def slaid_work_server(req):
     try:
         if req.action == "start":
@@ -177,17 +186,17 @@ if __name__ == '__main__':
 
     if bool(opts['--auto']):
         rospy.init_node('slaid_show_server')
-        s = rospy.Service('Slaid_show_ros', srv.Slaid_show, slaid_work_server) #////////////////////////////////////////////
+        s = rospy.Service('Slaid_show_ros', srv.Slaid_show, slaid_work_server)
         print("Ready slaid show")
         rospy.spin()
     else:
-        work = Slaid_show(pub_in_topic = pub_in_topic, pub_in_console = pub_in_console, is_node=not bool(opts['--auto']))
+        work = Slaid_show(pub_in_topic = pub_in_topic, pub_in_console = pub_in_console, is_node=pub_in_topic)
         if bool(opts['--last']):
             # find last creating path or file in correct directory
             work.in_path = work.search_last_created_object(path = input_path)
             if os.path.isdir(work.in_path):
                 work.start()
-            else:
+            elif work.in_path != "error":
                 work.publish(work.in_path)
         elif bool(opts['--max']):
             # find max memory path or file in correct directory
@@ -198,4 +207,5 @@ if __name__ == '__main__':
                 work.publish(work.in_path)
         else:
             #work = Slaid_show(in_path = input_path, time_delay = time_delay, pub_in_topic = pub_in_topic, pub_in_console = pub_in_console)
+            work.in_path = input_path
             work.start()
