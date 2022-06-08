@@ -6,8 +6,8 @@ from orbital import Station
 import glob
 import json
 try:
-  import rospy
-  from clover import srv
+    import rospy
+    from clover import srv
 except: pass
 
 USAGE = '''
