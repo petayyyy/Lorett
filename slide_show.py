@@ -196,9 +196,7 @@ if __name__ == '__main__':
         if bool(opts['--last']):
             # find last creating path or file in correct directory
             work.in_path = work.search_last_created_object(path = input_path)
-            print(work.in_path)
             if os.path.isdir(work.in_path):
-                print(11)
                 work.start()
             elif work.in_path != "error":
                 work.publish(work.in_path)
