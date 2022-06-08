@@ -63,6 +63,7 @@ add_service_files(
   FILES
   Sdr_recorder_ros.srv
   Slaid_show.srv
+  Get_pass_ros.srv
 )
 
 ## Generate actions in the 'action' folder
