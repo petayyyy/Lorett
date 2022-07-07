@@ -1,22 +1,8 @@
 #!/bin/bash
 path="Lorett"
 path_installation=`pwd`
+pyv='3'
 
-check_python_version () {
-    echo "Check Python version"
-    echo "You have: "
-    pyv=$(python -V 2>&1 | grep -Po '(?<=Python )(.+)')
-    if [[ -z "$pyv" ]]
-    then
-        pyv="$(python3 -V)" 
-    fi
-    echo $pyv
-    if [[ *"2."* != "$pyv" ]] ;then
-    pyv=''
-    else
-    pyv='3'
-    fi
-}
 move_Lorett () {
     echo "Move to installing directory"
     cd ~
@@ -42,7 +28,9 @@ start_buid_internet () {
     sudo apt-get install -y --fix-missing python$pyv-docopt
 
     echo "Install all packeges and libs for SatDump"
-    sudo apt-get install -y --fix-missing git build-essential cmake g++ pkgconf libfftw3-dev libvolk2-dev libjpeg-dev libpng-dev 
+    sudo apt install -y --fix-missing git build-essential cmake g++ pkgconf libfftw3-dev  libjpeg-dev libpng-dev 
+    sudo apt install -y --fix-missing libvolk2-dev
+    sudo apt install -y --fix-missing libvolk1-dev
     sudo apt-get install -y --fix-missing librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev                          
     sudo apt-get install -y --fix-missing libglew-dev libglfw3-dev   
     sudo apt-get install -y --fix-missing libzstd-dev   
@@ -89,7 +77,6 @@ start_buid_without_internet () {
     sudo pip$pyv install ./Dependence/Mako$pyv/Mako* --no-index
 }
 
-check_python_version
 echo -n "Checking Internet Connection..."
 ERR=`ping 8.8.8.8 -c 2 2>&1 > /dev/null` && start_buid_internet || { start_buid_without_internet; }
 
