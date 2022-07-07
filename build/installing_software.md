@@ -1,22 +1,8 @@
 #!/bin/bash
 path="Lorett"
 path_installation=`pwd`
+pyv='3'
 
-check_python_version () {
-    echo "Check Python version"
-    echo "You have: "
-    pyv=$(python -V 2>&1 | grep -Po '(?<=Python )(.+)')
-    if [[ -z "$pyv" ]]
-    then
-        pyv="$(python3 -V)" 
-    fi
-    echo $pyv
-    if [[ *"2."* != "$pyv" ]] ;then
-    pyv=''
-    else
-    pyv='3'
-    fi
-}
 move_Lorett () {
     echo "Move to installing directory"
     cd ~
@@ -56,7 +42,6 @@ start_buid_without_internet () {
     sudo apt-get install -y --fix-missing ./Dependence/python$pyv-docopt
 }
 
-check_python_version
 echo -n "Checking Internet Connection..."
 ERR=`ping 8.8.8.8 -c 2 2>&1 > /dev/null` && start_buid_internet || { start_buid_without_internet; }
 
