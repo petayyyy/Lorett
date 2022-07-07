@@ -1,26 +1,11 @@
 #!/bin/bash
 path="Lorett"
-
-check_python_version () {
-    echo "Check Python version"
-    echo "You have: "
-    pyv=$(python -V 2>&1 | grep -Po '(?<=Python )(.+)')
-    if [[ -z "$pyv" ]]
-    then
-        pyv="$(python3 -V)" 
-    fi
-    echo $pyv
-    if [[ *"2."* != "$pyv" ]] ;then
-    pyv=''
-    else
-    pyv='3'
-    fi
-}
-
-check_python_version
+pyv='3'
 
 echo "Install all packeges and libs for SatDump"
-sudo apt install -y --fix-missing git build-essential cmake g++ pkgconf libfftw3-dev libvolk2-dev libjpeg-dev libpng-dev 
+sudo apt install -y --fix-missing git build-essential cmake g++ pkgconf libfftw3-dev  libjpeg-dev libpng-dev 
+sudo apt install -y --fix-missing libvolk2-dev
+sudo apt install -y --fix-missing libvolk1-dev
 sudo apt install -y --fix-missing librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev                          
 sudo apt install -y --fix-missing libglew-dev libglfw3-dev   
 sudo apt install -y --fix-missing libzstd-dev   
