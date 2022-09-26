@@ -61,6 +61,7 @@ https://disk.yandex.ru/d/WOpfbO74N2cmPQ - инструкция по демоду
  Контакты:  ООО "Лоретт", Россия, г. Москва, Инновационный центр "Сколково", Большой бульвар, 42, стр. 1, офис 334, 121205
  +7 (985) 727-7630
  contact@lorett.org
+![image](https://user-images.githubusercontent.com/47917455/192191680-17f320b2-5eeb-4cb9-b11b-8b5cc5905faa.png)
 
 ## Ссылки:
 * Ссылка на вебинары: https://disk.yandex.ru/d/V-6W4ZBmIXW2ig
