@@ -25,6 +25,20 @@ add_service_files(
   publishPose.srv
   yawPose.srv
 )
+
+add_service_files(
+  FILES
+  GetTelemetry.srv
+  Navigate.srv
+  NavigateGlobal.srv
+  SetPosition.srv
+  SetVelocity.srv
+  SetAttitude.srv
+  SetRates.srv
+  SetLEDEffect.srv
+  Execute.srv
+)
+
 generate_messages(
   DEPENDENCIES
   std_msgs
