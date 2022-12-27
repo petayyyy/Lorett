@@ -22,12 +22,12 @@ roslaunch aruco_odom aruco_map_odometry.launch
 import rospy
 from lorett_c4s import srv
 
-point = rospy.ServiceProxy('lorett/point', lorett_c4s.publishPose)
-point(x=0.5, y=0.5, z=1.5, frame_id='aruco_odom_map')
+point = rospy.ServiceProxy('lorett/point_aruco', lorett_c4s.publishPose)
+point(x=0.5, y=0.5, z=1.5)
 
 ```
 
 2. Через консоль
 ```bash
-rosservice call /lorett/point "{x: 0.5, y: 0.5, z: 1.0, frame_id: 'aruco_odom_map'}" 
+rosservice call /lorett/point_aruco "{x: 0.5, y: 0.5, z: 1.0}" 
 ```
