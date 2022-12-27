@@ -3,4 +3,6 @@
     <include file="$(find px4_realsense_bridge)/launch/bridge_mavros.launch"/>
     <!-- Start fly by Mavlink messages -->
     <include file="$(find lorett_c4s)/launch/c4s.launch"/>
+    <!-- Start create odom by aruco and intel t265 -->
+    <include file="$(find aruco_odom)/launch/aruco_map_odometry.launch"/>
 </launch> 

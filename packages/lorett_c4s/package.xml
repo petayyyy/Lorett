@@ -1,19 +1,13 @@
 <?xml version="1.0"?>
-<package format="3">
+<package format="2">
   <name>lorett_c4s</name>
-  <version>0.23.0</version>
-  <description>The package for work c4s</description>
+  <version>0.0.1</version>
+  <description>The lorett_copter_for_space package</description>
 
   <maintainer email="ilyaholodilov19072002@gmail.com">Ilya Kholodilov</maintainer>
-  <license>MIT</license>
-
-
-  <author email="ilyaholodilov19072002@gmail.com">Ilya Kholodilov</author>
+  <license>TODO</license>
 
   <buildtool_depend>catkin</buildtool_depend>
-
-  <!-- Package format specifier version 2.0 allows specifying dependencies for both
-   build- and runtime in a single <depend> element -->
   <depend>message_generation</depend>
   <depend>roscpp</depend>
   <depend>rospy</depend>
@@ -26,4 +20,5 @@
   <depend>nodelet</depend>
   <depend>mavros</depend>
   <depend>mavros_extras</depend>
+  <depend>message_runtime</depend>
 </package>

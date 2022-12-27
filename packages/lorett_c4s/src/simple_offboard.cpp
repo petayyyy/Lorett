@@ -27,19 +27,19 @@
 #include <mavros_msgs/StatusText.h>
 #include <mavros_msgs/ManualControl.h>
 
-#include <clover/GetTelemetry.h>
-#include <clover/Navigate.h>
-#include <clover/NavigateGlobal.h>
-#include <clover/SetPosition.h>
-#include <clover/SetVelocity.h>
-#include <clover/SetAttitude.h>
-#include <clover/SetRates.h>
+#include <lorett_c4s/GetTelemetry.h>
+#include <lorett_c4s/Navigate.h>
+#include <lorett_c4s/NavigateGlobal.h>
+#include <lorett_c4s/SetPosition.h>
+#include <lorett_c4s/SetVelocity.h>
+#include <lorett_c4s/SetAttitude.h>
+#include <lorett_c4s/SetRates.h>
 
 using std::string;
 using std::isnan;
 using namespace geometry_msgs;
 using namespace sensor_msgs;
-using namespace clover;
+using namespace lorett_c4s;
 using mavros_msgs::PositionTarget;
 using mavros_msgs::AttitudeTarget;
 using mavros_msgs::Thrust;
@@ -346,33 +346,33 @@ void getNavigateSetpoint(const ros::Time& stamp, float speed, Point& nav_setpoin
 	nav_setpoint.z = nav_start.pose.position.z + (setpoint_position_transformed.pose.position.z - nav_start.pose.position.z) * passed;
 }
 
-PoseStamped globalToLocal(double lat, double lon)
-{
-	auto earth = GeographicLib::Geodesic::WGS84();
-
-	// Determine azimuth and distance between current and destination point
-	double _, distance, azimuth;
-	earth.Inverse(global_position.latitude, global_position.longitude, lat, lon, distance, _, azimuth);
-
-	double x_offset, y_offset;
-	double azimuth_radians = azimuth * M_PI / 180;
-	x_offset = distance * sin(azimuth_radians);
-	y_offset = distance * cos(azimuth_radians);
-
-	if (!waitTransform(local_frame, fcu_frame, global_position.header.stamp, ros::Duration(0.2))) {
-		throw std::runtime_error("No local position");
-	}
-
-	auto local = tf_buffer.lookupTransform(local_frame, fcu_frame, global_position.header.stamp);
-
-	PoseStamped pose;
-	pose.header.stamp = global_position.header.stamp; // TODO: ?
-	pose.header.frame_id = local_frame;
-	pose.pose.position.x = local.transform.translation.x + x_offset;
-	pose.pose.position.y = local.transform.translation.y + y_offset;
-	pose.pose.orientation.w = 1;
-	return pose;
-}
+//PoseStamped globalToLocal(double lat, double lon)
+//{
+//	auto earth = GeographicLib::Geodesic::WGS84();
+//
+//	// Determine azimuth and distance between current and destination point
+//	double _, distance, azimuth;
+//	earth.Inverse(global_position.latitude, global_position.longitude, lat, lon, distance, _, azimuth);
+//
+//	double x_offset, y_offset;
+//	double azimuth_radians = azimuth * M_PI / 180;
+//	x_offset = distance * sin(azimuth_radians);
+//	y_offset = distance * cos(azimuth_radians);
+//
+//	if (!waitTransform(local_frame, fcu_frame, global_position.header.stamp, ros::Duration(0.2))) {
+//		throw std::runtime_error("No local position");
+//	}
+//
+//	auto local = tf_buffer.lookupTransform(local_frame, fcu_frame, global_position.header.stamp);
+//
+//	PoseStamped pose;
+//	pose.header.stamp = global_position.header.stamp; // TODO: ?
+//	pose.header.frame_id = local_frame;
+//	pose.pose.position.x = local.transform.translation.x + x_offset;
+//	pose.pose.position.y = local.transform.translation.y + y_offset;
+//	pose.pose.orientation.w = 1;
+//	return pose;
+//}
 
 void publish(const ros::Time stamp)
 {
@@ -514,7 +514,7 @@ inline void checkState()
 		throw std::runtime_error("State timeout, check mavros settings");
 
 	if (!state.connected)
-		throw std::runtime_error("No connection to FCU, https://clover.coex.tech/connection");
+		throw std::runtime_error("No connection to FCU");
 }
 
 #define ENSURE_FINITE(var) { if (!std::isfinite(var)) throw std::runtime_error(#var " argument cannot be NaN or Inf"); }
@@ -646,14 +646,14 @@ bool serve(enum setpoint_type_t sp_type, float x, float y, float z, float vx, fl
 				throw std::runtime_error("Can't transform from " + reference_frame + " to " + local_frame);
 		}
 
-		if (sp_type == NAVIGATE_GLOBAL) {
-			// Calculate x and from lat and lot in request's frame
-			auto pose_local = globalToLocal(lat, lon);
-			pose_local.header.stamp = stamp; // TODO: fix
-			auto xy_in_req_frame = tf_buffer.transform(pose_local, frame_id);
-			x = xy_in_req_frame.pose.position.x;
-			y = xy_in_req_frame.pose.position.y;
-		}
+		//if (sp_type == NAVIGATE_GLOBAL) {
+		//	// Calculate x and from lat and lot in request's frame
+		//	auto pose_local = globalToLocal(lat, lon);
+		//	pose_local.header.stamp = stamp; // TODO: fix
+		//	auto xy_in_req_frame = tf_buffer.transform(pose_local, frame_id);
+		//	x = xy_in_req_frame.pose.position.x;
+		//	y = xy_in_req_frame.pose.position.y;
+		//}
 
 		// Everything fine - switch setpoint type
 		setpoint_type = sp_type;
