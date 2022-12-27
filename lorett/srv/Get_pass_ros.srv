@@ -1,5 +1,0 @@
-string action
-string input_path
-int64 time_delay
----
-string process

@@ -1,6 +1,0 @@
-string action
-string satellite
-string path
-int64 time_recording
----
-string process
