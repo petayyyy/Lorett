@@ -1,7 +1,5 @@
 #!/bin/bash
 pyv='3'
-path="Lorett"
-path_installation=`pwd`
 
 echo "Build Rock dependence"
 sudo apt install -y wget
@@ -84,7 +82,7 @@ pip$pyv install Mako
 
 echo "Intall SoapySDR"
 cd ~/catkin_ws/src
-git clone https://github.com/pothosware/SoapySDR.git 2>&1 || cd $path_installation
+git clone https://github.com/pothosware/SoapySDR.git 2>&1 
 
 cd SoapySDR
 git pull origin master 2>&1
@@ -98,7 +96,8 @@ cd ../..
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DLIB_INSTALL_DIR:PATH=lib64 -DLIB_SUFFIX=64 -DSOAPY_SDR_ROOT=/usr ..
 sudo add-apt-repository -y ppa:myriadrf/drivers
 
-git clone https://github.com/pothosware/SoapyAirspy.git 2>&1 || cd $path_installation
+cd ~/catkin_ws/src
+git clone https://github.com/pothosware/SoapyAirspy.git 2>&1 
 cd SoapyAirspy
 mkdir build
 cd build
@@ -111,20 +110,19 @@ SoapySDRUtil --info
 echo "Check installing SoapyAirspy"
 SoapySDRUtil --probe="driver=airspy"
 
-cd ../..
-
 echo "Install nng"
-git clone https://github.com/nanomsg/nng.git 2>&1 || cd $path_installation
+cd ~/catkin_ws/src
+git clone https://github.com/nanomsg/nng.git 2>&1 
 cd nng
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/usr .. # Linux
 make -j4
 sudo make install
-cd ../..
 #rm -rf nng
 
 echo "Install SatDump"
-git clone https://github.com/altillimity/satdump.git || cd $path_installation
+cd ~/catkin_ws/src
+git clone https://github.com/altillimity/satdump.git
 cd satdump
 mkdir build && cd build
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIVE=ON .. # Linux
@@ -135,7 +133,7 @@ chmod +x ./satdump
 
 echo "Make Satdum global name"
 cd ~
-text="export PATH=$PATH:/home/pi/catkin_ws/src/Lorett/satdump/build"
+text="export PATH=$PATH:~/catkin_ws/src/satdump/build"
 name=`tail -1 '.bashrc'`
 if [[ $name == $text ]] ; then
     echo "OK"
