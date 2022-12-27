@@ -1,5 +1,4 @@
-#!/usr/bin/env python 
-
+#!/usr/bin/env python3 
 
 def geto(id, file):
     f = open(file, 'r')
