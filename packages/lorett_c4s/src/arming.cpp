@@ -71,56 +71,61 @@ enum status_drone{
 };
 
 void offboardAndArm() {
-   	ros::Rate r(10);
-	if (state.mode != "OFFBOARD") {
-		auto start = ros::Time::now();
-		ROS_INFO("switch to OFFBOARD");
-		static mavros_msgs::SetMode sm;
-		sm.request.custom_mode = "OFFBOARD";
+    try{
+        ros::Rate r(10);
+        if (state.mode != "OFFBOARD") {
+            auto start = ros::Time::now();
+            ROS_INFO("switch to OFFBOARD");
+            static mavros_msgs::SetMode sm;
+            sm.request.custom_mode = "OFFBOARD";
 
-		if (!set_mode.call(sm))
-			throw std::runtime_error("Error calling set_mode service");
+            if (!set_mode.call(sm))
+                throw std::runtime_error("Error calling set_mode service");
 
-		// wait for OFFBOARD mode
-		while (ros::ok()) {
-			ros::spinOnce();
-			if (state.mode == "OFFBOARD") {
-				break;
-			} else if (ros::Time::now() - start > offboard_timeout) {
-				std::string report = "OFFBOARD timed out";
-				if (statustext.header.stamp > start)
-					report += ": " + statustext.text;
-				throw std::runtime_error(report);
-			}
-			ros::spinOnce();
-			r.sleep();
-		}
-	}
+            // wait for OFFBOARD mode
+            while (ros::ok()) {
+                ros::spinOnce();
+                if (state.mode == "OFFBOARD") {
+                    break;
+                } else if (ros::Time::now() - start > offboard_timeout) {
+                    std::string report = "OFFBOARD timed out";
+                    if (statustext.header.stamp > start)
+                        report += ": " + statustext.text;
+                    throw std::runtime_error(report);
+                }
+                ros::spinOnce();
+                r.sleep();
+            }
+        }
 
-	if (!state.armed) {
-		ros::Time start = ros::Time::now();
-		ROS_INFO("arming");
-		mavros_msgs::CommandBool srv;
-		srv.request.value = true;
-		if (!arming.call(srv)) {
-			throw std::runtime_error("Error calling arming service");
-		}
+        if (!state.armed) {
+            ros::Time start = ros::Time::now();
+            ROS_INFO("arming");
+            mavros_msgs::CommandBool srv;
+            srv.request.value = true;
+            if (!arming.call(srv)) {
+                throw std::runtime_error("Error calling arming service");
+            }
 
-		// wait until armed
-		while (ros::ok()) {
-			ros::spinOnce();
-			if (state.armed) {
-				break;
-			} else if (ros::Time::now() - start > arming_timeout) {
-				std::string report = "Arming timed out";
-				if (statustext.header.stamp > start)
-					report += ": " + statustext.text;
-				throw std::runtime_error(report);
-			}
-			ros::spinOnce();
-			r.sleep();
-		}
-	}
+            // wait until armed
+            while (ros::ok()) {
+                ros::spinOnce();
+                if (state.armed) {
+                    break;
+                } else if (ros::Time::now() - start > arming_timeout) {
+                    std::string report = "Arming timed out";
+                    if (statustext.header.stamp > start)
+                        report += ": " + statustext.text;
+                    throw std::runtime_error(report);
+                }
+                ros::spinOnce();
+                r.sleep();
+            }
+        }
+    }
+    catch (...){
+        /* */
+    }
 }
 
 bool navi(double x, double y, double z, std::string farme_id) {
@@ -234,6 +239,25 @@ bool takeOff (lorett_c4s::takeoff::Request& req, lorett_c4s::takeoff::Response& 
     ROS_INFO("takeOff PERFORMED");
     return true;
 }
+
+
+bool point_aruco (lorett_c4s::publishPose::Request& req, lorett_c4s::publishPose::Response& res) {
+    try{
+        ros::Rate rate(20.0);
+        for(int i = 200; ros::ok() && i > 0; --i){
+            navi(req.x, req.y, req.z, "aruco_odom_map");
+            ros::spinOnce();
+            rate.sleep();
+        }
+        res.s=true;
+        ROS_INFO("aruco point PERFORMED");
+    }
+    catch (...){
+        ROS_INFO("aruco have problem");
+    }
+    return true;
+}
+
 
 bool point (lorett_c4s::publishPose::Request& req, lorett_c4s::publishPose::Response& res) {
     ros::Rate rate(20.0);
@@ -420,6 +444,7 @@ int main(int argc, char **argv) {
     auto ld_serv = nh.advertiseService("lorett/land", &land);
     auto takeOff_serv = nh.advertiseService("lorett/takeOff", &takeOff);
     auto point_serv = nh.advertiseService("lorett/point", &point);
+    auto point_aruco_serv = nh.advertiseService("lorett/point_aruco", &point_aruco);
     auto killSwitch_serv = nh.advertiseService("lorett/killSwitch", &killSwitch);
     auto calibr_serv = nh.advertiseService("lorett/calibr", &calibr);
     auto reboot_fcu_serv = nh.advertiseService("lorett/reboot/fcu", &reboot_fcu);
