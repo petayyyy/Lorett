@@ -41,3 +41,19 @@ target_link_libraries(arming ${catkin_LIBRARIES})
 add_executable(telemetry src/telemetry.cpp)
 target_link_libraries(telemetry ${catkin_LIBRARIES})
 
+
+add_executable(simple_offboard src/simple_offboard.cpp)
+
+target_link_libraries(simple_offboard
+  ${catkin_LIBRARIES}
+  ${GeographicLib_LIBRARIES}
+)
+
+add_executable(vpe_publisher src/vpe_publisher.cpp)
+target_link_libraries(vpe_publisher ${catkin_LIBRARIES})
+
+install(TARGETS simple_offboard  vpe_publisher
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
