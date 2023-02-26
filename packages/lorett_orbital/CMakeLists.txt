@@ -52,11 +52,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  FILES
+  sdr_log.msg
+)
 
 ## Generate services in the 'srv' folder
 add_service_files(
@@ -64,6 +63,8 @@ add_service_files(
   Sdr_recorder_ros.srv
   Slaid_show.srv
   Get_pass_ros.srv
+  sdr_calibtrate.srv
+  sdr_recorder.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -109,10 +110,11 @@ add_service_files(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES lorett
-#  CATKIN_DEPENDS other_catkin_pkg
-#  DEPENDS system_lib
+  INCLUDE_DIRS include
+  LIBRARIES lorett
+  CATKIN_DEPENDS other_catkin_pkg
+  DEPENDS system_lib
+  CATKIN_DEPENDS message_runtime
 )
 
 ###########

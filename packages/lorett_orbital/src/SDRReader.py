@@ -1,3 +1,4 @@
+ 
 import SoapySDR
 from SoapySDR import *
 import sys
@@ -10,24 +11,18 @@ from scipy import signal
 from scipy.fftpack import fftshift
 import threading
 from docopt import docopt
-import rospy
-from clover import srv
 
 USAGE = '''
-
-sdr_python3 - Script for recording signal by meteorolog satellite.
-
+SDRReader.py - Script for recording signal by meteorolog satellite.
 Example:
-  python sdr_python3.py --s 'Noaa 19' --t 100
-  python sdr_python3.py -a | --auto
-  python sdr_python3.py -h | --help
+  SDRReader.py --s 'Noaa 19' --t 100
+  SDRReader.py -a | --auto
+  SDRReader.py -h | --help
   ***Don't forget about " or ' then you have space in naming. Also you can see example, use --h or -help then you start program.
-
 Usage:
-  sdr_python3.py [--s='<name>'] [--t=<sec>] [--p=<name>] [--out_iq=<bool>] [--out_log=<bool>] [--out_con=<bool>]
-  sdr_python3.py -h | --help
-  sdr_python3.py -a | --auto
-
+  SDRReader.py [--s='<name>'] [--t=<sec>] [--p=<name>] [--out_iq=<bool>] [--out_log=<bool>] [--out_con=<bool>]
+  SDRReader.py -h | --help
+  SDRReader.py -a | --auto
 Options:
   -h, --help             Show correct format parameters.
   -a, --auto             Flag working in autonov secions.
@@ -37,7 +32,6 @@ Options:
   --out_iq=<bool>        Flag creating iq file with data recording [default: True].
   --out_log=<bool>       Flag creating log file with signal data [default: True].
   --out_con=<bool>       Flag printing console useless data [default: True].
-
 '''
 SDR_CONFIGS = {
     'calibr' : { 'freq': 137e6, 'rssi_freq': [137e6,137e6 ], "sample_rate" : 6.0e6, 'bw': 4e6, 'gain':12.0 }, #default calibration
@@ -227,7 +221,8 @@ class OSMO_SDR:   ## Soapy based SDR class
             return False
         try:
             self.stream_break = False
-            self.th = threading.Thread(target=self.stream_threading, args=(data_file,log_file,spectr_file)).start()
+            self.th = threading.Thread(target=self.stream_threading, args=(data_file,log_file,spectr_file), daemon=True).start()
+            
         except Exception as e:
             print ("SDR threading start exception: {}".format(e))
         return True
@@ -321,69 +316,7 @@ class OSMO_SDR:   ## Soapy based SDR class
     def log_telemetry_threading(self, passid='',satellite='', config='', duration = None, stop_time=None,  log_file=None):
         """ run logging in a separate threading """
         #th = thread.start_new_thread(self.log_telemetry,(passid,satellite,config, duration,stop_time, log_file))
-        th = threading.Thread(target=self.log_telemetry, args=(passid,satellite,config, duration,stop_time, log_file)).start()
-
-def sdr_work_server(req):
-    global sdrr, satellite, time_recording, path
-    print(req)
-    try:
-        if req.action == "calibrate":
-            # Start work with airspy-sdr
-            sdrr = OSMO_SDR(SDR_CONFIGS)
-            # Configurate/calibrate sdr by name of satellite
-            if req.satellite != '': 
-                if sdrr.load_config(req.satellite): sdrr.calibrate()
-            else: 
-                if sdrr.load_config(satellite): sdrr.calibrate()
-            return srv.sdr_recorder_rosResponse(process = "calibrate")
-        elif req.action == "start":
-            try:
-                if sdrr == None:
-                    # Start work with airspy-sdr
-                    sdrr = OSMO_SDR(SDR_CONFIGS)
-                    # Configurate/calibrate sdr by name of satellite
-                    if req.satellite != '': 
-                        if sdrr.load_config(req.satellite): sdrr.calibrate()
-                    else: 
-                        if sdrr.load_config(satellite): sdrr.calibrate()
-                    time.sleep(1)
-            except: 
-                # Start work with airspy-sdr
-                sdrr = OSMO_SDR(SDR_CONFIGS)
-                # Configurate/calibrate sdr by name of satellite
-                if req.satellite != '': 
-                    if sdrr.load_config(req.satellite): sdrr.calibrate()
-                else: 
-                    if sdrr.load_config(satellite): sdrr.calibrate()
-                time.sleep(1)
-            # Generate file name of path recording
-            fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(sdrr.config_name.replace(" ", "_"), datetime.utcnow())
-            # Create path for all signals, if we don't have
-            if req.path != '': 
-                if not os.path.exists(req.path): os.makedirs(req.path) 
-                # Create path for now signal
-                os.mkdir("{0}/{1}".format(req.path,fileName))
-                # Generate file name of file recording
-                fileName = "{0}/{1}/{2}".format(req.path, fileName, fileName)
-            else: 
-                if not os.path.exists(path): os.makedirs(path) 
-                # Create path for now signal
-                os.mkdir("{0}/{1}".format(path,fileName))
-                # Generate file name of file recording
-                fileName = "{0}/{1}/{2}".format(path, fileName, fileName)
-            # Start recording signal
-            sdrr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
-            # Wait untill we see satellite
-            if req.time_recording != 0: time.sleep(req.time_recording)
-            else: time.sleep(time_recording)
-            # Stop recording, end of all process
-            sdrr.stop()
-            return srv.sdr_recorder_rosResponse(process = "start")
-        elif req.action == "kill" or req.action == "stop" or req.action == "exit":
-            sdrr = None
-            exit()
-        else: return srv.sdr_recorder_rosResponse(process = "error")
-    except:   return srv.sdr_recorder_rosResponse(process = "error")
+        th = threading.Thread(target=self.log_telemetry, args=(passid,satellite,config, duration,stop_time, log_file), daemon=True).start()
 
 if __name__ == '__main__':
     global satellite, time_recording, path
@@ -395,85 +328,18 @@ if __name__ == '__main__':
     OUTPUT_LOG_FLAG = bool(opts['--out_log'])
     OUTPUT_CON_FLAG = bool(opts['--out_con'])
 
-    if bool(opts['--auto']):
-        try:
-          rospy.init_node('sdr_test')
-          s = rospy.Service('sdr_recorder_ros', srv.Sdr_recorder_ros, sdr_work_server)
-          print("Ready sdr recorder")
-          rospy.spin()
-        except: pass
-    else:
-        # Start work with airspy-sdr
-        sdr = OSMO_SDR(SDR_CONFIGS)
-        # Configurate/calibrate sdr by name of satellite
-        if sdr.load_config(satellite): 
-            sdr.calibrate()
-            # Start recording some signal by satellite
-            if input("\nPress any key to continue ") == '0': exit()
-            # Generate file name of path recording
-            fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(sdr.config_name.replace(" ", "_"), datetime.utcnow())
-            # Create path for all signals, if we don't have
-            if not os.path.exists(path): os.makedirs(path) 
-            # Create path for now signal
-            os.mkdir("{0}/{1}".format(path,fileName))
-            # Generate file name of file recording
-            fileName = "{0}/{1}/{2}".format(path, fileName, fileName)
-            # Start recording signal
-            sdr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
-            # Wait untill we see satellite
-            time.sleep(time_recording)
-            # Stop recording, end of all process
-            sdr.stop()
-        else: print("Bye bye") fileName, fileName)
-            # Start recording signal
-            sdrr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
-            # Wait untill we see satellite
-            if req.time_recording != 0: time.sleep(req.time_recording)
-            else: time.sleep(time_recording)
-            # Stop recording, end of all process
-            sdrr.stop()
-            return srv.sdr_recorder_rosResponse(process = "start")
-        elif req.action == "kill" or req.action == "stop" or req.action == "exit":
-            sdrr = None
-            exit()
-        else: return srv.sdr_recorder_rosResponse(process = "error")
-    except:   return srv.sdr_recorder_rosResponse(process = "error")
+    # Start work with airspy-sdr
+    sdr = OSMO_SDR(SDR_CONFIGS)
+    # Configurate/calibrate sdr by name of satellite
+    if sdr.load_config(satellite):
+        sdr.calibrate()
+        # Start recording some signal by satellite``
+        # Generate file name of path recording
+        fileName = datetime.utcnow().strftime("%Y%m%d_%H%M%S_") + sdr.config_name 
 
-if __name__ == '__main__':
-    global satellite, time_recording, path
-    opts = docopt(USAGE)
-    satellite = opts['--s']
-    time_recording = int(opts['--t'])
-    path = opts['--p']
-    OUTPUT_IQ_FLAG = bool(opts['--out_iq'])
-    OUTPUT_LOG_FLAG = bool(opts['--out_log'])
-    OUTPUT_CON_FLAG = bool(opts['--out_con'])
-
-    if bool(opts['--auto']):
-        rospy.init_node('sdr_test')
-        s = rospy.Service('sdr_recorder_ros', srv.sdr_recorder_ros, sdr_work_server) #////////////////////////////////////////////
-        print("Ready sdr recorder")
-        rospy.spin()
-    else:
-        # Start work with airspy-sdr
-        sdr = OSMO_SDR(SDR_CONFIGS)
-        # Configurate/calibrate sdr by name of satellite
-        if sdr.load_config(satellite): 
-            sdr.calibrate()
-            # Start recording some signal by satellite
-            if input("\nPress any key to continue ") == '0': exit()
-            # Generate file name of path recording
-            fileName = "{0}_{1:m%m_day%d_h%H_min%M_}".format(sdr.config_name.replace(" ", "_"), datetime.utcnow())
-            # Create path for all signals, if we don't have
-            if not os.path.exists(path): os.makedirs(path) 
-            # Create path for now signal
-            os.mkdir("{0}/{1}".format(path,fileName))
-            # Generate file name of file recording
-            fileName = "{0}/{1}/{2}".format(path, fileName, fileName)
-            # Start recording signal
-            sdr.start("{0}.iq".format(fileName),"{0}.log".format(fileName),"")
-            # Wait untill we see satellite
-            time.sleep(time_recording)
-            # Stop recording, end of all process
-            sdr.stop()
-        else: print("Bye bye")
+        # Start recording signal
+        sdr.start(os.path.join(path, fileName + ".iq"), os.path.join(path, fileName + ".log"))
+        # Wait untill we see satellite
+        time.sleep(time_recording)
+        # Stop recording, end of all process
+        sdr.stop()
