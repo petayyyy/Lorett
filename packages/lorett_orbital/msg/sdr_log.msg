@@ -1,5 +1,4 @@
 time time
-int32 num
 string status
 string satellite
 float32 rssi

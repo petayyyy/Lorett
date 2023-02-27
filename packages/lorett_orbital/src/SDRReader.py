@@ -11,6 +11,7 @@ from scipy import signal
 from scipy.fftpack import fftshift
 import threading
 from docopt import docopt
+import rospy
 
 USAGE = '''
 SDRReader.py - Script for recording signal by meteorolog satellite.
@@ -164,6 +165,7 @@ class OSMO_SDR:   ## Soapy based SDR class
                                 self.rssi = numpy.mean(self.spectr_PSD[rssi_f0ind:rssi_f1ind])
                                 self.rssi_log.append([datetime.utcnow(),self.rssi,self.rssi-self.noise_level])
                                 if self.verbose:
+                                    self.ros_topic_log(rospy.Time.now(), "streaming", self.config_name, self.rssi, self.noise_level)
                                     print ("{}\t{:.1f}\t{:.1f}".format(datetime.utcnow(),self.rssi,self.rssi-self.noise_level))
                         #-- save spectrum
                         if spectr_fid is not None: #dump spectr to file
@@ -190,6 +192,7 @@ class OSMO_SDR:   ## Soapy based SDR class
             except Exception as ew:
                 print("rssi log exception: {}".format(ew))
         self.state='idle'
+        self.ros_topic_log(rospy.Time.now(), "end", self.config_name, 0, self.noise_level)
         print ("==========SDR streaming end===========")
 
     def load_config(self, conf_file=None, config_id=0):
@@ -215,22 +218,22 @@ class OSMO_SDR:   ## Soapy based SDR class
 
     def start(self,data_file='',log_file='',spectr_file=''):
 
-        if self.verbose : print ("Starting SDR...")
+        if self.verbose : self.ros_topic_log(rospy.Time.now(),"Starting SDR...", self.config_name, 0, self.noise_level)
         if self.conf is None:
-            print ("ERROR: SDR is not properly configured before start")
+            self.ros_topic_log(rospy.Time.now(), "ERROR: SDR is not properly configured before start", self.config_name, 0, self.noise_level)
             return False
         try:
             self.stream_break = False
             self.th = threading.Thread(target=self.stream_threading, args=(data_file,log_file,spectr_file), daemon=True).start()
             
         except Exception as e:
-            print ("SDR threading start exception: {}".format(e))
+            self.ros_topic_log(rospy.Time.now(), "SDR threading start exception: {}".format(e), self.config_name, 0, self.noise_level)
         return True
 
     def stop(self):
         self.stream_break = True
         time.sleep(0.2)
-        if self.verbose : print ("////Stop SDR//// {}".format(self.state))
+        if self.verbose : self.ros_topic_log(rospy.Time.now(), "////Stop SDR//// {}".format(self.state), self.config_name, 0, self.noise_level)
         pass
 
     def calibrate(self):
@@ -281,6 +284,7 @@ class OSMO_SDR:   ## Soapy based SDR class
         self.calibrated_at = datetime.utcnow()
         if self.verbose: print("Calibrated noise level: {}".format(self.noise_level))
         print ("==========end of calibration===========")
+        return self.noise_level
 
     def log_telemetry(self, passid='',satellite='', config='', duration = None, stop_time=None, log_file=None):
         """ monitor and log telemetry """
@@ -329,7 +333,7 @@ if __name__ == '__main__':
     OUTPUT_CON_FLAG = bool(opts['--out_con'])
 
     # Start work with airspy-sdr
-    sdr = OSMO_SDR(SDR_CONFIGS)
+    sdr = OSMO_SDR(SDR_CONFIGS, None)
     # Configurate/calibrate sdr by name of satellite
     if sdr.load_config(satellite):
         sdr.calibrate()
