@@ -2,7 +2,8 @@
 
 ## Command:  
 ```bash
-sudo apt-get install osmo-sdr soapysdr-module-osmosdr
+sudo apt-get install osmo-sdr soapysdr-module-osmosdr  
+sudo apt-get install cmake g++ libpython3-dev python3-numpy swig
 ```
 ## Прикладная задача:
 **Наша цель** — сделать конструктор доступнее для того чтобы вовлечь как можно больше школьников в прикладные исследования в областях летающей робототехники, программирования и метеорологии.
