@@ -12,11 +12,11 @@ def calibrate(req):
         return sdr_calibrateResponse("ERR", 0) 
 
 def recorder(req):
-    global sdr
+    global sdr, path
     fileName = SDRReader.datetime.utcnow().strftime("%Y%m%d_%H%M%S_") + sdr.config_name 
 
     # Start recording signal
-    sdr.start(SDRReader.os.path.join(req.path, fileName + ".iq"), SDRReader.os.path.join(req.path, fileName + ".log"))
+    sdr.start(SDRReader.os.path.join(path, fileName + ".iq"), SDRReader.os.path.join(path, fileName + ".log"))
     # Wait untill we see satellite
     SDRReader.time.sleep(req.time_recording)
     # Stop recording, end of all process
@@ -24,9 +24,11 @@ def recorder(req):
 
 
 if __name__ == "__main__":
-    global sdr
-    
+    global sdr, path 
+
     rospy.init_node('sdr_auto')
+
+    path = '~/records/'
 
     pub = rospy.Publisher('sdr_log', sdr_log, queue_size=10)
     sdr = SDRReader.OSMO_SDR(SDRReader.SDR_CONFIGS, pub)

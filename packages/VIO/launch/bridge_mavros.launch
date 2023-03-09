@@ -1,27 +1,53 @@
 <launch>
   <arg name="ns" default="/"/>
-  <arg name="fcu_url" default="/dev/pix_cube:921600"/> 
+  <arg name="fcu_url" default="/dev/ttyACM0:921600"/> 
   <arg name="gcs_url" default="tcp-l://0.0.0.0:5760" />   <!-- conect QGC in tcp -->
   <arg name="tgt_system" default="1" />
   <arg name="tgt_component" default="1" />
-  
-  <!-- Launch bridge -->
+  <arg name="respawn" default="true"/>
+  <arg name="prefix" default=""/>
+  <!-- Launch bridge 
   <include file="$(find px4_realsense_bridge)/launch/bridge.launch" >
-  </include>
+  </include> -->
 
   <!-- Launch MavROS -->
   <group ns="$(arg ns)">
-      <include file="$(find mavros)/launch/node.launch">
-          <arg name="pluginlists_yaml" value="$(find mavros)/launch/px4_pluginlists.yaml" />
-          <!-- Need to change the config file to get the tf topic and get local position in terms of local origin -->
-          <arg name="config_yaml" value="$(find mavros)/launch/px4_config.yaml" />
-          <arg name="fcu_url" value="$(arg fcu_url)" />
-          <arg name="gcs_url" value="$(arg gcs_url)" />
-          <arg name="tgt_system" value="$(arg tgt_system)" />
-          <arg name="tgt_component" value="$(arg tgt_component)" />
-      </include>
+    <node pkg="mavros" type="mavros_node" name="mavros" launch-prefix="$(arg prefix)" required="false" clear_params="true" respawn="$(arg respawn)" respawn_delay="1" output="screen">
+      <!-- UART connection -->
+      <param name="fcu_url" value="$(arg fcu_url)"/>
+      <!-- gcs bridge -->
+      <param name="gcs_url" value="$(arg gcs_url)"/>
+      <param name="gcs_quiet_mode" value="true"/>
+      <param name="conn/timeout" value="8"/>
+      <!-- basic params -->
+      <rosparam command="load" file="$(find px4_realsense_bridge)/launch/mavros_config.yaml"/>
+      <rosparam param="plugin_whitelist">
+          - altitude
+          - command
+          - distance_sensor
+          - ftp
+          - global_position
+          - imu
+          - local_position
+          - manual_control
+          # - mocap_pose_estimate
+          - param
+          - px4flow
+          - rc_io
+          - setpoint_attitude
+          - setpoint_position
+          - setpoint_raw
+          - setpoint_velocity
+          - sys_status
+          - sys_time
+          - vision_pose_estimate
+          # - vision_speed_estimate
+          # - waypoint
+      </rosparam>
+    </node>
   </group>
 
+    
     <!-- simplified offboard control -->
      <node name="simple_offboard" pkg="lorett_c4s" type="simple_offboard" output="screen" clear_params="true">
         <param name="reference_frames/main_camera_optical" value="map"/>
@@ -32,12 +58,26 @@
         <remap to="mavros/local_position/pose" from="local_position"/>
         <remap to="mavros/setpoint_position/local" from="local_setpoint"/>
         <param name="fixed_frame_id" value="map"/>
-        <param name="child_frame_id" value="body"/>
+        <param name="child_frame_id" value="base_link"/>
         <param name="marker_scale" value="1"/>
         <param name="max_track_size" value="40"/>
         <param name="num_rotors" value="4"/>
     </node>
+    
+    <arg name="aruco_vpe" default="false"/>
 
+    <!-- For additional help go to https://clover.coex.tech/aruco -->
+
+    <arg name="force_init" default="true"/>
+    <arg name="disable" default="true"/>
+
+    <node name="vpe_publisher" pkg="lorett_c4s" type="vpe_publisher" if="$(eval aruco_vpe or force_init)" output="screen" clear_params="true">
+        <remap from="~pose_cov" to="aruco_map/pose" if="$(arg aruco_vpe)"/>
+        <remap from="~vpe" to="mavros/vision_pose/pose"/>
+        <param name="frame_id" value="aruco_map_detected" if="$(arg aruco_vpe)"/>
+        <param name="force_init" value="$(arg force_init)"/>
+        <param name="offset_frame_id" value="aruco_map"/>
+    </node>
         <!-- Camera pose publisher 
     This node publishes tf from parent_frame to child_frame-->
     <!-- <node pkg="px4_realsense_bridge" name="camera_pose_publisher" type="camera_pose_publisher.py" output="screen">
