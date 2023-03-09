@@ -1,13 +1,10 @@
 # Copter for space
 
-## Command:  
+## Команды:  
 ```bash
 sudo apt-get install osmo-sdr soapysdr-module-osmosdr  
 sudo apt-get install cmake g++ libpython3-dev python3-numpy swig
 ```
-## Видео о комплексе
-[![IMAGE_ALT](https://i.ytimg.com/vi/g4s14v2qtwU/0.jpg)](https://www.youtube.com/watch?v=g4s14v2qtwU&feature=youtu.be&ab_channel=%D0%9C%D0%B0%D0%BB%D1%8B%D1%88%D0%BA%D0%B8%D0%BD%D0%A2%D0%B8%D0%BC%D1%83%D1%80)
-
 ## Специальное оборудование 
 Приёмная часть состоит из :  
 * **Облучателя L-диапазона** (ряд металлизированных дисков разных размеров, закрепленных при помощи шпильки на некотором расстоянии друг от друга), малошумящего усилителя (МШУ) соответствующих частот, тройника смешения (специальное устройство, позволяющее подавать питание на МШУ и принимать сигнал по одному проводу) и программируемого радиоприемника (airspy sdr).  
