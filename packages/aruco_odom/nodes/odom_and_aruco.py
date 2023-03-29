@@ -2,7 +2,6 @@
 import rospy
 
 # Because of transformations
-import tf_conversions
 
 import tf2_ros
 import geometry_msgs.msg

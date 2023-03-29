@@ -1,6 +1,0 @@
-<launch>
-    <!-- Start package for VIO and connect fly coontroller -->
-    <include file="$(find px4_realsense_bridge)/launch/bridge_mavros.launch"/>
-    <!-- Start fly by Mavlink messages -->
-    <include file="$(find lorett_c4s)/launch/c4s.launch"/>
-</launch> 
