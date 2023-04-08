@@ -96,7 +96,7 @@ def process_request(arg):
 
 def pos_callback(msg):
     global Pos_x, Pos_y, Pos_z
-    if(msg.transforms[0].header.frame_id == "map"):
+    if(msg.transforms[0].header.frame_id == "aruco_odom_map"):
         Pos_x = msg.transforms[0].transform.translation.x/RAD_REFLECTOR
         Pos_y = msg.transforms[0].transform.translation.y/RAD_REFLECTOR
         Pos_z = msg.transforms[0].transform.translation.z
