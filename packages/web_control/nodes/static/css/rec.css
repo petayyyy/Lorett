@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.right {
+  margin-left: 100px;
+  width: 30%;
+}
+
+.info {
+    margin-left: 10px;
+}
+
+.right {
+  background-color: #b3b3b3;
+  display: list-item;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  width: 700px;
+  height: 700px;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Satellite Schedule</title>
+    <link href="{{ url_for('static', filename='css/sat.css') }}" rel="stylesheet">
+  </head>
+  <body>
+    <div class="station">
+        <h1>Информация о вашей станции</h1>
+        <h3>Имя станции: {{station.stationName}}</h3>
+        <h3>Тип станции: {{station.stationType}}</h3>
+        <h3>Широта станции: {{station.lat}}</h3>
+        <h3>Долгота станции: {{station.lon}}</h3>
+        <h3>Высота станции: {{station.alt}}</h3>
+        <h3>Принимаемые спутники:</h3>
+        {% for i in station.satList%}
+            <h3 class="sat">{{i}}</h3>
+        {% endfor %}
+        <h3>Минимальный горизонт: {{station.horizon}}</h3>
+        <h3>Минимальный апогей: {{station.minApogee}}</h3>
+    </div>
+    <div class = "schedule">
+        <h1>Ближайшие пролёты(12 часов)</h1>
+        <table>
+            <tr><th>Satellite</th><th>DateTime</th><th>Azimuth</th><th>Elevation</th></tr>
+            {% for i in schedule[0:-1]%}
+                <tr><td>{{i[0]}}</td><td>{{i[1]}}</td><td>{{i[2]}}</td><td>{{i[3]}}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+  </body>
+</html>

@@ -7,4 +7,6 @@
     <include file="$(find odom_tf2)/launch/odom_tf2.launch"/>
     <include file="$(find aruco_odom)/launch/aruco_map_odometry.launch"/>
 
+    <include file="$(find web_control)/launch/web.launch"/>
+
 </launch> 

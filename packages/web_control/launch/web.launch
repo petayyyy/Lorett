@@ -1,0 +1,3 @@
+<launch>
+    <node name = "web" pkg="web_control" type="main.py" respawn="false" output="screen"/>
+</launch>

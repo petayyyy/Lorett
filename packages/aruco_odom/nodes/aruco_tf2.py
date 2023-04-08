@@ -12,7 +12,7 @@ from cv_bridge import CvBridge
 
 import numpy as np
 
-import open_map
+
 
 
 
@@ -34,7 +34,7 @@ def image_callback(data):
 
 			cv2.aruco.drawDetectedMarkers(cv_image, corners)
 			#print(tvec)
-			g = open_map.geto(ids[i], rospy.get_param('~map_file'))
+			g = geto(ids[i], rospy.get_param('~map_file'))
 
 			pose_centry[0] += tvec[0][0][0] + g[3]
 			pose_centry[1] += tvec[0][0][1] + g[2]
@@ -64,7 +64,14 @@ def image_callback(data):
 		cv2.aruco.drawAxis(cv_image, intrinsic_camera, distortion, rvec, np.array((pose_centry[0], pose_centry[1], tvec[0][0][2])), 0.2)
 	image_pub.publish(bridge.cv2_to_imgmsg(cv_image, 'bgr8'))
 
-
+def geto(id, file):
+    f = open(file, 'r')
+    for i in f.readlines():
+        if(i[0] == '#'):
+            continue
+        g = list(map(float, i.split("\t")))
+        if(id == int(g[0])):
+            return g
 
 if __name__ == '__main__':
 	rospy.init_node('aruco_tf2')

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Reception satellite</title>
+    <script src="{{ url_for('static', filename='js/rec.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/rec.css') }}" rel="stylesheet">
+  </head>
+  <body>
+    <h1>Система контроля дрона</h1>
+    <h2>Позиция дрона и спутника</h2>
+    
+    <div class="container">
+        <canvas class="left" id = "canvas_plot" width="700" height="700"></canvas>
+        <div class="right">
+            <h1 class="info" id = "height"></h1>
+            <h1 class="info">Add info</h1>
+            <h1 class="info">Add info</h1>
+        </div>
+    </div>
+  </body>
+</html>
