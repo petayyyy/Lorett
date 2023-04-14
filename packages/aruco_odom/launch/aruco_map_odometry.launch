@@ -2,7 +2,7 @@
 
     <node name="aruco_tf2_1" pkg="aruco_odom" type="aruco_tf2.py" respawn="false" output="screen" >
         <param name="num" type = "string" value="1"/>
-        <param name="map_file" type = "string" value="~/catkin_ws/src/aruco_odom/nodes/C4S_map.txt"/>
+        <param name="map_file" type = "string" value="/home/rock/catkin_ws/src/aruco_odom/nodes/C4S_map.txt"/>
         <param name="fx" type = "string" value="285.222808837891"/>
         <param name="fy" type = "string" value="285.393310546875"/>
         <param name="ppx" type = "string" value="424.528411865234"/>
@@ -14,7 +14,7 @@
     </node>
     <node name="aruco_tf2_2" pkg="aruco_odom" type="aruco_tf2.py" respawn="false" output="screen" >
         <param name="num" type = "string" value="2"/>
-        <param name="map_file" type = "string" value="~/catkin_ws/src/aruco_odom/nodes/C4S_map.txt"/>
+        <param name="map_file" type = "string" value="/home/rock/catkin_ws/src/aruco_odom/nodes/C4S_map.txt"/>
         <param name="fx" type = "string" value="285.219696044922"/>
         <param name="fy" type = "string" value="285.371307373047"/>
         <param name="ppx" type = "string" value="426.107391357422"/>
