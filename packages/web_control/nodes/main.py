@@ -11,7 +11,6 @@ from tf2_msgs.msg import TFMessage
 import subprocess
 from tracks.msg import TrackCoord
 
-import threading
 
 
 tracks = '/coords'

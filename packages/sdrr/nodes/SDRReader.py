@@ -1,8 +1,4 @@
-#!/usr/bin/env python3
-
-import rospy
-from lorett.msg import sdr_log
-from lorett.srv import sdr_calibtrate, sdr_recorder
+ 
 import SoapySDR
 from SoapySDR import *
 import sys
@@ -49,30 +45,6 @@ SDR_CONFIGS = {
     'FENGYUN 3B' : { 'freq': 1704.5e6, 'rssi_freq': [1704.0e6,1705.0e6 ], "sample_rate" : 6.0e6, 'bw': 6e6, 'gain':12.0 },
     'FENGYUN 3C' : { 'freq': 1701.4e6, 'rssi_freq': [1701.0e6,1701.8e6 ], "sample_rate" : 6.0e6, 'bw': 6e6, 'gain':12.0 },
 }
-
-
-
-
-def calibrate(req):
-    global sdr
-    if sdr.load_config(req.satellite):
-        noise_level = sdr.calibrate()
-        return sdr_calibtrate("OK", noise_level)
-    else:
-        return sdr_calibtrate("ERR", 0) 
-
-def recorder(req):
-    global sdr, path
-    fileName = datetime.utcnow().strftime("%Y%m%d_%H%M%S_") + sdr.config_name 
-
-    # Start recording signal
-    sdr.start(os.path.join(path, fileName + ".iq"), os.path.join(path, fileName + ".log"))
-    # Wait untill we see satellite
-    time.sleep(req.time_recording)
-    # Stop recording, end of all process
-    sdr.stop()
-
-
 
 class OSMO_SDR:   ## Soapy based SDR class
     def __init__(self, SDR_CONFIGS, ros_topic_log, device_str="airspy"):
@@ -350,20 +322,28 @@ class OSMO_SDR:   ## Soapy based SDR class
         #th = thread.start_new_thread(self.log_telemetry,(passid,satellite,config, duration,stop_time, log_file))
         th = threading.Thread(target=self.log_telemetry, args=(passid,satellite,config, duration,stop_time, log_file), daemon=True).start()
 
+if __name__ == '__main__':
+    global satellite, time_recording, path
+    opts = docopt(USAGE)
+    satellite = opts['--s']
+    time_recording = int(opts['--t'])
+    path = opts['--p']
+    OUTPUT_IQ_FLAG = bool(opts['--out_iq'])
+    OUTPUT_LOG_FLAG = bool(opts['--out_log'])
+    OUTPUT_CON_FLAG = bool(opts['--out_con'])
 
+    # Start work with airspy-sdr
+    sdr = OSMO_SDR(SDR_CONFIGS, None)
+    # Configurate/calibrate sdr by name of satellite
+    if sdr.load_config(satellite):
+        sdr.calibrate()
+        # Start recording some signal by satellite``
+        # Generate file name of path recording
+        fileName = datetime.utcnow().strftime("%Y%m%d_%H%M%S_") + sdr.config_name 
 
-
-if __name__ == "__main__":
-    global sdr, path 
-
-    rospy.init_node('sdr_auto')
-
-    path = '~/records/'
-
-    pub = rospy.Publisher('sdr_log', sdr_log, queue_size=10)
-    sdr = OSMO_SDR(SDR_CONFIGS, pub)
-
-    rospy.Service("sdr_calibrate", sdr_calibtrate, calibrate)
-    rospy.Service("sdr_recorder", sdr_recorder, recorder)
-
-    rospy.spin()
+        # Start recording signal
+        sdr.start(os.path.join(path, fileName + ".iq"), os.path.join(path, fileName + ".log"))
+        # Wait untill we see satellite
+        time.sleep(time_recording)
+        # Stop recording, end of all process
+        sdr.stop()

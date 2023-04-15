@@ -1,3 +1,4 @@
+string status
 string satname
 float64 x
 float64 y

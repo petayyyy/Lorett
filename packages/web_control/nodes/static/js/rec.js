@@ -50,4 +50,4 @@ function updateNumber() {
   xhr.send(null);
 }
 
-setInterval(updateNumber, 500);
+setInterval(updateNumber, 1000);

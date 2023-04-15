@@ -45,9 +45,6 @@ def handle_body_pose(msg):
         rot_z = tf_conversions.transformations.euler_from_quaternion([msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w])[2]
 
 
-
-
-
         q = tf_conversions.transformations.quaternion_from_euler(rot_x - (camera1_rotation_x + camera2_rotation_x)/2, rot_y - (camera1_rotation_y + camera2_rotation_y)/2, rot_z - (camera1_rotation_z + camera2_rotation_z)/2)        
 
         t.transform.rotation.x = q[0]
