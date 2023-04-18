@@ -66,7 +66,6 @@ def reception():
 @app.route('/satellite')
 def satellite():
     station.update()
-    # рассчитать ближайший пролет (сохраняет трек-файл рядом с собой)
     lenght = 24
 
     while(True):
@@ -94,10 +93,10 @@ def cmd():
 @app.route('/get_pos')
 def random_number():
     data = {
-        "x":Pos_y,
-        "y":-1 * Pos_x,
-        "cellX": cell_pos_x/0.55,
-        "cellY": cell_pos_y/0.55,
+        "x":-1*Pos_y,
+        "y":Pos_x,
+        "cellY": cell_pos_x/0.55,
+        "cellX": cell_pos_y/0.55,
         "height": satellite_name
     }
     #print(cell_pos_x + 0.55, cell_pos_y - 0.55)
@@ -105,7 +104,6 @@ def random_number():
 
 @app.route('/topic_request/<arg>')
 def process_request(arg):
-    # здесь можно обработать запрос и вернуть результат
     if arg == 'all':
         arg = '<table>'
         for i in rospy.get_published_topics():
@@ -140,7 +138,7 @@ def kill_all():
 
 def pos_callback(msg):
     global Pos_x, Pos_y, Pos_z
-    if(msg.transforms[0].child_frame_id == "aruco_odom_map"):
+    if(msg.transforms[0].child_frame_id == "aruco_map" and msg.transforms[0].header.frame_id == "map"):
         Pos_x = msg.transforms[0].transform.translation.x/RAD_REFLECTOR
         Pos_y = msg.transforms[0].transform.translation.y/RAD_REFLECTOR
         Pos_z = msg.transforms[0].transform.translation.z

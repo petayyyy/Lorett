@@ -54,6 +54,32 @@ def handle_body_pose(msg):
 
         br.sendTransform(t)
 
+
+        t = geometry_msgs.msg.TransformStamped()
+        t.header.stamp = rospy.Time.now()
+        t.header.frame_id = "aruco_centry"
+        t.child_frame_id = "aruco_map"
+
+        t.transform.translation.x = (camera1_offset_y + camera2_offset_y)/2
+        t.transform.translation.y = (camera1_offset_x + camera2_offset_x)/2
+        t.transform.translation.z = (camera1_offset_z + camera2_offset_z)/2
+
+        rot_x = tf_conversions.transformations.euler_from_quaternion([msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w])[0]
+        rot_y = tf_conversions.transformations.euler_from_quaternion([msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w])[1]
+        rot_z = tf_conversions.transformations.euler_from_quaternion([msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w])[2]
+
+
+        q = tf_conversions.transformations.quaternion_from_euler((camera1_rotation_x + camera2_rotation_x)/2, (camera1_rotation_y + camera2_rotation_y)/2, (camera1_rotation_z + camera2_rotation_z)/2)        
+
+        t.transform.rotation.x = q[0]
+        t.transform.rotation.y = q[1]
+        t.transform.rotation.z = q[2]
+        t.transform.rotation.w = q[3]
+
+        br.sendTransform(t)
+
+
+
 def handle_odom_pose(msg):
         
     if(msg.transforms[0].child_frame_id == "camera1"):

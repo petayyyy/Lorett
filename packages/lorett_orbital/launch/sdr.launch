@@ -1,3 +1,0 @@
-<launch>
-    <node name="sdr_auto" pkg="lorett" type="auto_sdr.py" respawn="true" output="screen"/>
-</launch>

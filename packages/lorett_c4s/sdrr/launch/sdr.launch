@@ -1,0 +1,3 @@
+<launch>
+    <node name = "sdr" pkg="sdrr" type="main.py" respawn="false" output="screen"/>
+</launch>

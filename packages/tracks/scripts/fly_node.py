@@ -15,7 +15,6 @@ class FlyNode:
     def main(self):
         while not rospy.is_shutdown():
             satname, date, trackPath = self.track.generateTrack()
-            rospy.sleep(10)
             
             rospy.loginfo('\n'*100)
             rospy.loginfo(f"Satellite: {satname}")
@@ -23,11 +22,11 @@ class FlyNode:
             rospy.loginfo(f"Sleep: {max(0, (date - datetime.utcnow()).seconds)}")
             
 
-            rospy.sleep(max(0, (date - datetime.utcnow()).seconds)) # UNCOMENT FOR RELEASE
+            rospy.sleep(max(0, (date - datetime.utcnow()).seconds - 60)) # UNCOMENT FOR RELEASE
             
             tc = TrackCoord()
             
-            tc.status = 'cal'
+            tc.status = 'calling'
             tc.satname = satname
             tc.x = trackPath[0][0]
             tc.y = trackPath[0][1]
@@ -35,17 +34,18 @@ class FlyNode:
             
             self.coorsPub.publish(tc)
 
+            rospy.sleep(max(0, (date - datetime.utcnow()).seconds))
 
             for coords in trackPath:
                 t = time()
                 tc = TrackCoord()
 
-                tc.status = 'pr'
+                tc.status = 'receiving'
                 tc.satname = satname
                 tc.x, tc.y, tc.z = coords
                 self.coorsPub.publish(tc)
                 #rospy.loginfo(f"{coords}")
-                rospy.sleep(max(1, (1 - (time() - t))))
+                rospy.sleep(min(1, (1 - (time() - t))))
             
             tc = TrackCoord()
 

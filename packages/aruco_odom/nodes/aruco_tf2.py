@@ -22,11 +22,10 @@ import numpy as np
 
 
 
-def image_callback(data):
+def image_callback(data, intrinsic_camera, distortion, bridge, image_pub):
 	cv_image = bridge.imgmsg_to_cv2(data, 'bgr8')
 	
 	gray_img = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
-	cv2.aruco_dict = arucoDict
 
 	corners, ids, rejected_img_points = cv2.aruco.detectMarkers(gray_img, cv2.aruco_dict,parameters=arucoParams)
 	pose_centry = [0,0,0]
@@ -40,24 +39,21 @@ def image_callback(data):
 			rvec, tvec, objPoint = cv2.aruco.estimatePoseSingleMarkers(corners[i], 0.25, intrinsic_camera, distortion)
 
 			cv2.aruco.drawDetectedMarkers(cv_image, corners)
-			#print(tvec)
+			
+			g = all_aruco[str(ids[i])]
 
-			g = geto(ids[i], rospy.get_param('~map_file'))
-
-			#print(rvec)
             
 			if(g != None):
-				pose_centry[0] += tvec[0][0][0] + g[3]
-				pose_centry[1] += tvec[0][0][1] + g[2]
-				pose_centry[2] += g[4]
+				pose_centry[0] += tvec[0][0][0] + g[2]
+				pose_centry[1] += tvec[0][0][1] + g[1]
+				pose_centry[2] += g[3]
 
-				rot_centry[0] += rvec[0][0][0]
-				rot_centry[1] += rvec[0][0][1]
-				rot_centry[2] += rvec[0][0][2]
+				rot_centry[0] += rvec[0][0][0] + g[4]
+				rot_centry[1] += rvec[0][0][1] + g[5]
+				rot_centry[2] += rvec[0][0][2] + g[6]
 			else:
 				counter -= 1
 				continue
-			#cv2.aruco.drawAxis(cv_image, intrinsic_camera, distortion, rvec, np.array((tvec[0][0][0] + g[3], tvec[0][0][1] + g[2], tvec[0][0][2])), 0.2)
 		if(counter != 0):
 			pose_centry[0] = pose_centry[0]/counter
 			pose_centry[1] = pose_centry[1]/counter
@@ -66,57 +62,72 @@ def image_callback(data):
 			rot_centry[0] = rot_centry[0]/counter
 			rot_centry[1] = rot_centry[1]/counter
 			rot_centry[2] = rot_centry[2]/counter
-
-			br = tf2_ros.TransformBroadcaster()
-			t = geometry_msgs.msg.TransformStamped()
-
-			t.header.stamp = rospy.Time.now()
-			t.header.frame_id = "aruco_centry"
-			t.child_frame_id = "camera" + numdrone
-			t.transform.translation.x = pose_centry[0]
-			t.transform.translation.y = pose_centry[1]
-			t.transform.translation.z = 0.0
+	return pose_centry, rot_centry
 
 
-			q = tf_conversions.transformations.quaternion_from_euler(rot_centry[0], rot_centry[1], rot_centry[2])
-
-
-			t.transform.rotation.x = q[0]
-			t.transform.rotation.y = q[1]
-			t.transform.rotation.z = q[2]
-			t.transform.rotation.w = q[3]
-
-			br.sendTransform(t)
-
-			cv2.aruco.drawAxis(cv_image, intrinsic_camera, distortion, rvec, np.array((pose_centry[0], pose_centry[1], tvec[0][0][2])), 0.2)
-	image_pub.publish(bridge.cv2_to_imgmsg(cv_image, 'bgr8'))
-
-def geto(id, file):
-    f = open(file, 'r')
-    for i in f.readlines():
-        if(i[0] == '#'):
-            continue
-        g = list(map(float, i.split("\t")))
-        if(id == int(g[0])):
-            f.close()
-            return g
     
 
 if __name__ == '__main__':
 	rospy.init_node('aruco_tf2')
-	numdrone = rospy.get_param('~num')
-	imagetopic = '/camera/fisheye%s/image_raw' % numdrone
-	bridge = CvBridge()
-	
-	image_pub = rospy.Publisher('~debug_camera_' + numdrone, Image, queue_size=10)
 
-	arucoDict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_1000)
 	arucoParams = cv2.aruco.DetectorParameters_create()
+	cv2.aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_4X4_1000)
+	all_aruco = {}
+	f = open(rospy.get_param('~map_file'), 'r')
+	for i in f.readlines():
+		if(i[0] == '#'):
+			continue
+		u = list(map(float, i.split("\t")))
+		
+		all_aruco[str(u[0])] = all_aruco[1:]
+	f.close()
 
-	intrinsic_camera = np.array(((float(rospy.get_param('~fx')), 0, float(rospy.get_param('~ppx'))),(0, float(rospy.get_param('~fy')), float(rospy.get_param('~ppy'))),(0,0,1)))
-	distortion = np.array((float(rospy.get_param('~c1')),float(rospy.get_param('~c2')),float(rospy.get_param('~c3')),float(rospy.get_param('~c4')), 0))
+	bridge_1 = CvBridge()
+	image_pub_1 = rospy.Publisher('~debug_camera_1', Image, queue_size=10)
+	
+	image_camera_1 = rospy.wait_for_message("/camera/fisheye1/image_raw", Image)
+	pos_camera_1, rot_camera_1 = image_callback(image_camera_1, np.array(((float(rospy.get_param('~fx_1')), 0, float(rospy.get_param('~ppx_1'))),(0, float(rospy.get_param('~fy_1')), float(rospy.get_param('~ppy_1'))),(0,0,1))), np.array((float(rospy.get_param('~c1_1')),float(rospy.get_param('~c2_1')),float(rospy.get_param('~c3_1')),float(rospy.get_param('~c4_1')), 0)), bridge_1, image_pub_1)
 
-	image_sub = rospy.Subscriber(imagetopic, Image, image_callback)
 
 
+	bridge_2 = CvBridge()
+	image_pub_2 = rospy.Publisher('~debug_camera_2', Image, queue_size=10)
+	
+	image_camera_2 = rospy.wait_for_message("/camera/fisheye2/image_raw", Image)
+	pos_camera_2, rot_camera_2 = image_callback(image_camera_1, np.array(((float(rospy.get_param('~fx_2')), 0, float(rospy.get_param('~ppx_2'))),(0, float(rospy.get_param('~fy_2')), float(rospy.get_param('~ppy_2'))),(0,0,1))), np.array((float(rospy.get_param('~c1_2')),float(rospy.get_param('~c2_2')),float(rospy.get_param('~c3_2')),float(rospy.get_param('~c4_2')), 0)), bridge_2, image_pub_2)
+
+	pos = [0,0,0]
+	pos[0] = (pos_camera_1[0] + pos_camera_2[0] )/2
+	pos[1] = (pos_camera_1[1] + pos_camera_2[1] )/2
+	pos[2] = (pos_camera_1[2] + pos_camera_2[2] )/2
+	
+	rot = [0,0,0]
+	rot[0] = (rot_camera_1[0] + rot_camera_2[0] )/2
+	rot[1] = (rot_camera_1[1] + rot_camera_2[1] )/2
+	rot[2] = (rot_camera_1[2] + rot_camera_2[2] )/2
+
+	msg = rospy.wait_for_message('/mavros/local_position/pose', geometry_msgs.msg.PoseStamped)
+	
+	
+	
+	br = tf2_ros.TransformBroadcaster()
+	t = geometry_msgs.msg.TransformStamped()
+
+	t.header.stamp = rospy.Time.now()
+	t.header.frame_id = "map"
+	t.child_frame_id = "aruco_map"
+
+	t.transform.translation.x = pos[0] + msg.pose.position.x 
+	t.transform.translation.y = pos[1] + msg.pose.position.y
+	t.transform.translation.z = pos[2] + msg.pose.position.z
+
+	rot_mav = tf_conversions.transformations.euler_from_quaternion([msg.pose.orientation.x, msg.pose.orientation.y, msg.pose.orientation.z, msg.pose.orientation.w])
+
+	q = tf_conversions.transformations.quaternion_from_euler(rot[0] + rot_mav[0], rot[1] + rot_mav[1], rot[2] + rot_mav[2])        
+	
+	t.transform.rotation.x = q[0]
+	t.transform.rotation.y = q[1]
+	t.transform.rotation.z = q[2]
+	t.transform.rotation.w = q[3]
+	br.sendTransform(t)
 	rospy.spin()
