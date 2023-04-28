@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Пример сайта с Flask</title>
+ <script src="{{ url_for('static', filename='js/topic.js') }}"></script>
+</head>
+<body>
+ <h2>Введите аргумент:</h2>
+ <input type="text" id="input_text">
+ <button onclick="sendRequest()">Вывести Topic</button>
+ <button onclick="sendRequestLoop()">Постоянно чекать топик</button>
+ <p id="output_text"></p>
+</body>
+</html>

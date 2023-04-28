@@ -1,13 +1,14 @@
 <launch>
   <arg name="ns" default="/"/>
-  <arg name="fcu_url" default="/dev/pix_cube:921600"/> 
+<!--  <arg name="fcu_url" default="/dev/ttyACM0:921600"/> -->
+  <arg name="fcu_url" default="/dev/ttyUSB0:921600"/>
   <arg name="gcs_url" default="tcp-l://0.0.0.0:5760" />   <!-- conect QGC in tcp -->
   <arg name="tgt_system" default="1" />
   <arg name="tgt_component" default="1" />
-  
-  <!-- Launch bridge -->
+ 
   <include file="$(find px4_realsense_bridge)/launch/bridge.launch" >
   </include>
+
 
   <!-- Launch MavROS -->
   <group ns="$(arg ns)">
@@ -35,14 +36,6 @@
         <param name="child_frame_id" value="body"/>
         <param name="marker_scale" value="1"/>
         <param name="max_track_size" value="40"/>
-        <param name="num_rotors" value="4"/>
+        <param name="num_rotors" value="6"/>
     </node>
-
-        <!-- Camera pose publisher 
-    This node publishes tf from parent_frame to child_frame-->
-    <!-- <node pkg="px4_realsense_bridge" name="camera_pose_publisher" type="camera_pose_publisher.py" output="screen">
-        <param name="parent_frame" value="map" />
-        <param name="child_frame" value="base_link" />
-        <param name="pose_topic" value="camera/pose" />
-    </node> -->
 </launch>

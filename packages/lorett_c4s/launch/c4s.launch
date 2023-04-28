@@ -1,4 +1,4 @@
 <launch>
-    <node name="telemetry" pkg="lorett_c4s" type="telemetry"  output="screen"/> 
+<!--    <node name="telemetry" pkg="lorett_c4s" type="telemetry"  output="screen"/> -->
     <node name="arming" pkg="lorett_c4s" type="arming" output="screen"/>
 </launch>   

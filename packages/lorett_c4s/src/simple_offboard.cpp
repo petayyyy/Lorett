@@ -27,13 +27,13 @@
 #include <mavros_msgs/StatusText.h>
 #include <mavros_msgs/ManualControl.h>
 
-#include <lorett_c4s/GetTelemetry.h>
-#include <lorett_c4s/Navigate.h>
-#include <lorett_c4s/NavigateGlobal.h>
-#include <lorett_c4s/SetPosition.h>
-#include <lorett_c4s/SetVelocity.h>
-#include <lorett_c4s/SetAttitude.h>
-#include <lorett_c4s/SetRates.h>
+#include "lorett_c4s/Navigate.h"
+#include "lorett_c4s/NavigateGlobal.h"
+#include "lorett_c4s/SetPosition.h"
+#include "lorett_c4s/GetTelemetry.h"
+#include "lorett_c4s/SetVelocity.h"
+#include "lorett_c4s/SetAttitude.h"
+#include "lorett_c4s/SetRates.h"
 
 using std::string;
 using std::isnan;

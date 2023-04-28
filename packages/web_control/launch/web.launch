@@ -1,0 +1,8 @@
+<launch>
+    <node name = "web" pkg="web_control" type="main.py" respawn="false" output="screen">
+        <param name="pos_ref_x" type = "string" value="1.77"/>        
+        <param name="pos_ref_y" type = "string" value="0"/>        
+        <param name="pos_ref_z" type = "string" value="0.69"/>        
+
+    </node>
+</launch>
