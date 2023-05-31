@@ -6,7 +6,9 @@ echo "Installing all dependence for SDR"
 sudo apt-get install -y airspy soapysdr-module-airspy soapysdr-tools libairspy-dev
 
 echo "Install libs for python3 SDR soft"
-sudo apt-get install -y --fix-missing python3-scipy python3-matplotlib python3-soapysdr python3-numpy python3-docopt
+sudo apt-get install -y --fix-missing python3-scipy python3-matplotlib python3-soapysdr python3-numpy python3-docopt python3-soapysdr python3-prettytable python3-pyorbital
+pip3 install thread6 -y
+#pip3 install -y matplotlib>=3.3 requests>=2.26.0 pyorbital>=1.6.1 beautifulsoup4>=4.10.0 prettytable>=2.2.0
 
 echo "Create dependence directory"
 cd ~
