@@ -1,21 +1,18 @@
 #!/bin/bash
-path="Lorett"
-pyv='3'
+path="sdr_dependence"
 
 echo "Install all packeges and libs for SatDump"
-sudo apt install -y --fix-missing git build-essential cmake g++ pkgconf libfftw3-dev  libjpeg-dev libpng-dev 
-sudo apt install -y --fix-missing libvolk2-dev
-sudo apt install -y --fix-missing libvolk1-dev
-sudo apt install -y --fix-missing librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev                          
-sudo apt install -y --fix-missing libglew-dev libglfw3-dev   
-sudo apt install -y --fix-missing libzstd-dev   
-sudo apt install -y --fix-missing xorg-dev
-sudo apt-get install -y --fix-missing libglu1-mesa-dev freeglut3-dev mesa-common-dev       
+sudo apt install -y git build-essential cmake g++ pkgconf libfftw3-dev  libjpeg-dev libpng-dev 
+sudo apt install -y libvolk2-dev
+sudo apt install -y libvolk1-dev
+sudo apt install -y libluajit
+sudo apt install -y --fix-missing librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev libglew-dev libglfw3-dev libzstd-dev                           
+sudo apt install -y xorg-dev
+sudo apt install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev       
 
-pip$pyv install Mako
+pip3 install Mako
 
 cd ~
-cd catkin_ws/src/
 if [ ! -f  "/"$path ]; then
     mkdir $path
 fi
@@ -35,15 +32,18 @@ echo "Install SatDump"
 git clone https://github.com/altillimity/satdump.git
 cd satdump
 mkdir build && cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIVE=ON .. # Linux
-make -j4
-ln -s ../pipelines . 
-ln -s ../resources . 
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr .. # Linux
+make -j`nproc`
+#make -j4
+ln -s ../pipelines .        # Symlink pipelines so it can run
+ln -s ../resources .        # Symlink resources so it can run
+ln -s ../satdump_cfg.json . # Symlink settings so it can run
+sudo make install
 chmod +x ./satdump
 
 echo "Make Satdum global name"
 cd ~
-text="export PATH=$PATH:/home/pi/catkin_ws/src/Lorett/satdump/build"
+text="export PATH=$PATH:~/$path"
 name=`tail -1 '.bashrc'`
 if [[ $name == $text ]] ; then
     echo "OK"
