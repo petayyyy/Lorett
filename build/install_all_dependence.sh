@@ -11,6 +11,8 @@ sudo apt install libsndfile1-dev -y
 sudo apt-get install libsoapysdr-dev -y
 sudo apt install libspdlog-dev -y
 sudo apt-get -y install python3-pip -y
+sudo apt-get -y install bsdmainutils
+sudo apt-get -y install hdparm
 
 echo "Build Realsense"
 cd $path
@@ -27,3 +29,6 @@ bash ./installing_sdr.sh
 echo "Build Satdump" 
 cd $path
 bash ./installing_satdump.sh
+
+echo "Connect flight controller"
+sudo usermod -a -G dialout $USER
