@@ -30,3 +30,10 @@ sudo make uninstall && make clean && make && sudo make install
 sudo udevadm control --reload-rules && udevadm trigger
 sudo modprobe uvcvideo
 
+# echo "Install and build Intel Realsense packages"
+# sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key  F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key  F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
+# sudo add-apt-repository "deb https://librealsense.intel.com/Debian/apt-repo $(lsb_release -cs) main" -u
+# sudo apt update
+# sudo apt-get install -y librealsense2*
+# sudo apt-get install -y libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev
+# sudo apt-get install -y ros-noetic-librealsense*
