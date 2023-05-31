@@ -44,6 +44,9 @@ cd /opt/ros/noetic/lib/mavros
 sudo ./install_geographiclib_datasets.sh
 sudo apt install -y ros-noetic-ddynamic-reconfigure*
 
+echo "Install all ros packages"
+sudo apt -y install ros-noetic-realsense2-camera-dbgsym
+
 echo "Install C4S_v2 ros packages"
 sudo apt install -y git
 cd ~
