@@ -49,8 +49,11 @@ echo "Install all ros packages"
 sudo apt -y install ros-noetic-realsense2-camera-dbgsym
 sudo apt install -y ros-noetic-cv-camera
 sudo apt install -y ros-noetic-web-video-server
+sudo apt install ros-noetic-web-video-server-dbgsym
 sudo apt install -y ros-noetic-rosbridge-server
 sudo apt install -y ros-noetic-rosserial-python 
+sudo apt install -y ros-noetic-cv-camera
+sudo apt install -y ros-noetic-cv-camera-dbgsym
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "Install C4S_v2 ros packages"
