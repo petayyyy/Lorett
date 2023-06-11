@@ -1,7 +1,11 @@
 # Copter for space
 ## Установка ПО:
+Обновление всех пакетов микрокомпьютера
 ```bash
 sudo apt update
+```
+Установка пакетов комплекса
+```bash
 sudo apt install wget -y
 sudo apt install git -y
 git clone https://github.com/petayyyy/Lorett.git
