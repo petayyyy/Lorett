@@ -1,5 +1,11 @@
 # Copter for space
-
+## Установка ПО:
+```bash
+sudo apt update
+sudo apt install wget -y
+sudo apt install git -y
+git clone https://github.com/petayyyy/Lorett.git
+```
 ## Команды:  
 ```bash
 sudo apt-get install osmo-sdr soapysdr-module-osmosdr  
