@@ -55,6 +55,7 @@ sudo apt install -y ros-noetic-rosserial-python
 sudo apt install -y ros-noetic-cv-camera
 sudo apt install -y ros-noetic-cv-camera-dbgsym
 sudo apt install -y ros-noetic-robot-upstart
+sudo apt -y install  ros-noetic-realsense2-camera-dbgsym
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo "Install C4S_v2 ros packages"
