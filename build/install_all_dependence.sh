@@ -13,6 +13,7 @@ sudo apt install libspdlog-dev -y
 sudo apt-get -y install python3-pip -y
 sudo apt-get -y install bsdmainutils
 sudo apt-get -y install hdparm
+sudo apt install -y cmake make
 
 echo "Build Realsense"
 cd $path
