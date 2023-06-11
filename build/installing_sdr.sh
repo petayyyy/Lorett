@@ -35,7 +35,7 @@ sudo add-apt-repository -y ppa:myriadrf/drivers
 # cd ../..
 # cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DLIB_INSTALL_DIR:PATH=lib64 -DLIB_SUFFIX=64 -DSOAPY_SDR_ROOT=/usr ..
 
-cd ..
+cd ../..
 git clone https://github.com/pothosware/SoapyAirspy.git 2>&1 
 cd SoapyAirspy
 mkdir build
