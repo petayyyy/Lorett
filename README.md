@@ -10,6 +10,10 @@ sudo apt install wget -y
 sudo apt install git -y
 git clone https://github.com/petayyyy/Lorett.git
 ```
+Recommend installing avahi on Ubuntu (used for device discovery):
+```bash
+sudo apt-get install avahi-daemon libavahi-client-dev 
+```
 ## Команды:  
 ```bash
 sudo apt-get install osmo-sdr soapysdr-module-osmosdr  
