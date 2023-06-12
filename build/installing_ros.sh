@@ -39,7 +39,7 @@ echo "Install Mavros"
 sudo apt-get -y install ros-noetic-mavros*
 cd /opt/ros/noetic/lib/mavros
 sudo ./install_geographiclib_datasets.sh
-sudo apt install -y ros-noetic-ddynamic-reconfigure*
+sudo apt install -y ros-noetic-ddynamic-reconfigure ros-noetic-ddynamic-reconfigure-dbgsym ros-noetic-ddynamic-reconfigure-python
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 echo "Install all ros packages"
