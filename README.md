@@ -14,7 +14,21 @@ Recommend installing avahi on Ubuntu (used for device discovery):
 ```bash
 sudo apt-get install avahi-daemon libavahi-client-dev 
 ```
-## Команды:  
+## Команды: 
+Подключеник к wifi сети:
+```bash
+sudo su
+```
+```bash
+nmcli r wifi on
+```
+Example, wifi_name is your SSID and wifi_password is password of network
+```bash
+nmcli dev wifi connect "wifi_name" password "wifi_password"
+```
+```bash
+nmcli dev wifi connect "216_5G" password "KVANT216"
+```
 ```bash
 sudo apt-get install osmo-sdr soapysdr-module-osmosdr  
 sudo apt-get install cmake g++ libpython3-dev python3-numpy swig
