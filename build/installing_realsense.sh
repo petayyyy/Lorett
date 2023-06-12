@@ -20,7 +20,7 @@ cd $path_cam
 echo "Install and build realsense driver and toolkit"
 git clone -b v2.50.0 https://github.com/IntelRealSense/librealsense.git
 cd librealsense
-bash ./scripts/setup_udev_rules.sh
+sudo bash ./scripts/setup_udev_rules.sh
 #bash ./scripts/patch-realsense-ubuntu-lts.sh
 mkdir build && cd build
 cmake ../ -DCMAKE_BUILD_TYPE=Release -DFORCE_RSUSB_BACKEND=ON -DBUILD_WITH_TM2=true
