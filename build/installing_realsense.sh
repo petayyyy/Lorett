@@ -3,7 +3,7 @@ path="dependence"
 path_cam="realsense_dependence"
 
 echo "Install packeges for Realsense"
-sudo apt -y install  ros-noetic-realsense2-camera-dbgsym
+#sudo apt -y install  ros-noetic-realsense2-camera-dbgsym
 sudo apt -y install git libssl-dev libusb-1.0-0-dev libudev-dev pkg-config libgtk-3-dev
 
 echo "Create dependence directory"
