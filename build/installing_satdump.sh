@@ -4,7 +4,7 @@ path="sdr_dependence"
 echo "Install all packeges and libs for SatDump"
 sudo apt install -y git build-essential cmake g++ pkgconf libfftw3-dev  libjpeg-dev libpng-dev 
 sudo apt install -y libvolk2-dev
-sudo apt install -y libvolk1-dev
+#sudo apt install -y libvolk1-dev
 sudo apt install -y libluajit
 sudo apt install -y librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev libglew-dev libglfw3-dev libzstd-dev                           
 sudo apt install -y xorg-dev
