@@ -13,9 +13,6 @@ apt search ros-noetic
 
 echo "Environment setup"
 echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
-
-echo "Environment setup"
-echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
 echo "Build packages"
