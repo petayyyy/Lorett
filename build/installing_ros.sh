@@ -16,10 +16,10 @@ echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
 echo "Build packages"
-sudo apt install python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
+sudo apt install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
 
 echo "Initialize rosdep"
-sudo apt install python3-rosdep
+sudo apt install -y python3-rosdep
 sudo rosdep init
 rosdep update
 
