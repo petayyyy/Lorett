@@ -43,9 +43,8 @@ sudo apt install -y ros-noetic-ddynamic-reconfigure*
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 echo "Install all ros packages"
-sudo apt install -y ros-noetic-realsense2-camera-dbgsym ros-noetic-cv-camera
+sudo apt install -y ros-noetic-realsense2-camera-dbgsym ros-noetic-cv-camera ros-noetic-cv-camera-dbgsym
 sudo apt install -y ros-noetic-web-video-server ros-noetic-web-video-server-dbgsym ros-noetic-rosbridge-server
-sudo apt install -y ros-noetic-cv-camera ros-noetic-cv-camera-dbgsym
 sudo apt install -y ros-noetic-rosserial-python 
 sudo apt install -y ros-noetic-robot-upstart
 # ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
