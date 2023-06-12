@@ -6,7 +6,7 @@ sudo apt install -y git build-essential cmake g++ pkgconf libfftw3-dev  libjpeg-
 sudo apt install -y libvolk2-dev
 sudo apt install -y libvolk1-dev
 sudo apt install -y libluajit
-sudo apt install -y --fix-missing librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev libglew-dev libglfw3-dev libzstd-dev                           
+sudo apt install -y librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev libglew-dev libglfw3-dev libzstd-dev                           
 sudo apt install -y xorg-dev
 sudo apt install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev       
 
