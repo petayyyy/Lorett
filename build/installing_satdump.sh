@@ -1,5 +1,6 @@
 #!/bin/bash
-path="sdr_dependence"
+path="dependence"
+path_sdr="sdr_dependence"
 
 echo "Install all packeges and libs for SatDump"
 sudo apt install -y git build-essential cmake g++ pkgconf libfftw3-dev  libjpeg-dev libpng-dev 
@@ -12,11 +13,16 @@ sudo apt install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev
 
 pip3 install Mako
 
+echo "Create dependence directory"
 cd ~
 if [ ! -f  "/"$path ]; then
     mkdir $path
 fi
 cd $path
+if [ ! -f  "/"$path_sdr ]; then
+    mkdir $path_sdr
+fi
+cd $path_sdr
 
 echo "Install nng"
 git clone https://github.com/nanomsg/nng.git
