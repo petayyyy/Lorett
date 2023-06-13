@@ -15,6 +15,12 @@ sudo apt-get -y install bsdmainutils
 sudo apt-get -y install hdparm
 sudo apt install -y cmake make
 
+
+pip3 install flask
+pip3 install pyorbital
+pip3 install prettytable
+pip3 install bs4
+
 echo "Build Realsense"
 cd $path
 bash ./installing_realsense.sh
