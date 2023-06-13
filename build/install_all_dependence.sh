@@ -5,16 +5,12 @@ echo "Build Rock dependence"
 sudo apt install -y wget
 sudo apt update
 
-
-
 sudo apt install libsndfile1-dev -y
-#sudo apt-get install libsoapysdr-dev -y
 sudo apt install libspdlog-dev -y
 sudo apt-get -y install python3-pip -y
 sudo apt-get -y install bsdmainutils
 sudo apt-get -y install hdparm
 sudo apt install -y cmake make
-
 
 pip3 install flask
 pip3 install pyorbital
