@@ -43,7 +43,7 @@ chmod +x ./satdump
 
 echo "Make Satdum global name"
 cd ~
-text="export PATH=$PATH:~/$path"
+text="export PATH=$PATH:~/dependence/sdr_dependence/satdump/build"
 name=`tail -1 '.bashrc'`
 if [[ $name == $text ]] ; then
     echo "OK"
