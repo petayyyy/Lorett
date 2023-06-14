@@ -1,22 +1,28 @@
 #!/bin/bash
-path="sdr_dependence"
+path="dependence"
+path_sdr="sdr_dependence"
 
 echo "Install all packeges and libs for SatDump"
 sudo apt install -y git build-essential cmake g++ pkgconf libfftw3-dev  libjpeg-dev libpng-dev 
 sudo apt install -y libvolk2-dev
-sudo apt install -y libvolk1-dev
+#sudo apt install -y libvolk1-dev
 sudo apt install -y libluajit
-sudo apt install -y --fix-missing librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev libglew-dev libglfw3-dev libzstd-dev                           
+sudo apt install -y librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev libglew-dev libglfw3-dev libzstd-dev                           
 sudo apt install -y xorg-dev
 sudo apt install -y libglu1-mesa-dev freeglut3-dev mesa-common-dev       
 
 pip3 install Mako
 
+echo "Create dependence directory"
 cd ~
 if [ ! -f  "/"$path ]; then
     mkdir $path
 fi
 cd $path
+if [ ! -f  "/"$path_sdr ]; then
+    mkdir $path_sdr
+fi
+cd $path_sdr
 
 echo "Install nng"
 git clone https://github.com/nanomsg/nng.git
@@ -43,7 +49,7 @@ chmod +x ./satdump
 
 echo "Make Satdum global name"
 cd ~
-text="export PATH=$PATH:~/$path"
+text="export PATH=$PATH:~/dependence/sdr_dependence/satdump/build"
 name=`tail -1 '.bashrc'`
 if [[ $name == $text ]] ; then
     echo "OK"
