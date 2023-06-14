@@ -3,7 +3,7 @@
         <param name="lat" type="double" value="55.702999"/>
         <param name="lon" type="double" value="37.530883"/>
         <param name="alt" type="double" value="0.16"/>
-        <param name="debug" type="bool" value="false"/>
+        <param name="debug" type="bool" value="true"/>
         <param name="horizon" type="int" value="55"/>
         <param name="minApogee" type="int" value="65"/>
         <param name="focus" type="double" value="1.54"/>

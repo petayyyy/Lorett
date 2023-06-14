@@ -75,8 +75,8 @@ def random_number():
     data = {
         "y":Pos_y,
         "x":Pos_x,
-        "cellY": cell_pos_x,
-        "cellX": cell_pos_y,
+        "cellY": cell_pos_y,
+        "cellX": cell_pos_x,
         "sat": satellite_name,
         "apogey": apogey,
         "time_start":time_start
