@@ -4,27 +4,16 @@
 from flask import Flask
 import flask
 import json
-import orb.orbital
 
 import rospy
 from geometry_msgs.msg import PoseStamped
 import subprocess
 from tracks.msg import TrackCoord
-
+from datetime import datetime
 
 
 tracks = '/coords'
 
-
-name = "C4STest"
-type = "c4s"
-lat = 61.0014
-lon = 68.9940
-alt = 0.060
-timeZone = 5
-
-
-RAD_REFLECTOR = orb.orbital.supportedStationTypes[type]["radius"]
 
 rospy.init_node('web_node')
 
@@ -34,13 +23,13 @@ Pos_z = 0
 
 cell_pos_x = 0
 cell_pos_y = 0
-cell_pos_z = orb.orbital.supportedStationTypes[type]["focus"]
+cell_pos_z = 12121212
 
 
 satellite_name = ''
+apogey = 0
+time_start = ''
 
-
-station = orb.orbital.Scheduler(name, lat, lon, alt,stationType=type, timeZone=timeZone, path="orb/")
 
 
 app = Flask(__name__)
@@ -63,19 +52,10 @@ def main():
 def reception():
     return flask.render_template("reception.html")
 
-@app.route('/satellite')
-def satellite():
-    station.update()
-    lenght = 24
-
-    while(True):
-        try:
-            station.nextPass(length=lenght)
-            break
-        except:
-            lenght+=1
-
-    return flask.render_template("satelite.html", station = station.getStation(), schedule = station.getSchedule(lenght, returnTd=True))
+#@app.route('/satellite')
+#def satellite():
+#    #FIX
+#    return flask.render_template("satelite.html", station = station.getStation(), schedule = station.getSchedule(lenght, returnTd=True))
 
 @app.route('/pos')
 def pos():
@@ -93,12 +73,13 @@ def cmd():
 @app.route('/get_pos')
 def random_number():
     data = {
-        "y":Pos_x,
-        "x":Pos_y*-1,
-        "cellY": cell_pos_x/0.55,
-        "cellX": cell_pos_y/0.55,
+        "y":Pos_y,
+        "x":Pos_x,
+        "cellY": cell_pos_x,
+        "cellX": cell_pos_y,
         "sat": satellite_name,
-        "height": Pos_z
+        "apogey": apogey,
+        "time_start":time_start
     }
     #print(cell_pos_x + 0.55, cell_pos_y - 0.55)
     return json.dumps(data)
@@ -146,16 +127,17 @@ def pos_callback(msg):
 
 
 def track_callback(msg):
-    global cell_pos_y, cell_pos_x, satellite_name
+    global cell_pos_y, cell_pos_x, satellite_name, apogey, time_start
     cell_pos_x = msg.x 
-    #cell_pos_y = msg.y
-    cell_pos_y = -1* msg.y
+    cell_pos_y = msg.y
     satellite_name = msg.info.satname
+    apogey = msg.info.apogey
+    time_start = datetime.fromtimestamp(msg.info.time_start.to_sec()).strftime("%c")
 
 
 
 if __name__ == '__main__':
-    rospy.Subscriber('/mavros/local_position/pose', PoseStamped, pos_callback)
+    #rospy.Subscriber('/mavros/local_position/pose', PoseStamped, pos_callback)
     rospy.Subscriber(tracks, TrackCoord, track_callback)
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
     rospy.spin()

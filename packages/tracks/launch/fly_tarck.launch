@@ -1,9 +1,14 @@
 <launch>
-    <node name="fly_node" pkg="tracks" type="fly_node.py" output="screen">
-        <param name="lon" type="double" value="68.993910"/>
-        <param name="lat" type="double" value="61.001389"/>
-        <param name="alt" type="double" value="60"/>
-        <param name="satname" type="string" value="NOAA 19"/>
+    <node name="fly_node" pkg="tracks" type="main.py" output="screen">
+        <param name="lat" type="double" value="55.702999"/>
+        <param name="lon" type="double" value="37.530883"/>
+        <param name="alt" type="double" value="0.16"/>
         <param name="debug" type="bool" value="false"/>
+        <param name="horizon" type="int" value="55"/>
+        <param name="minApogee" type="int" value="65"/>
+        <param name="focus" type="double" value="1.54"/>
+        <param name="stationName" type="string" value="c4s_v2"/>
+        <param name="timeDelay" type="int" value="10"/>
+        <param name="step" type="double" value="0.5"/>
     </node>
 </launch>

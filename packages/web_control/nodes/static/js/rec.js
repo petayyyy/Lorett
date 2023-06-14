@@ -42,8 +42,9 @@ function updateNumber() {
         ctx.stroke();
 
 
-        document.getElementById('height').innerHTML = "Height: " + data.height;
+        document.getElementById('apogey').innerHTML = "Apogey: " + data.apogey;
         document.getElementById('satName').innerHTML = "Satelite: " + data.sat;
+        document.getElementById('time_start').innerHTML = "Time start: " + data.time_start;
       }
     }
   };
