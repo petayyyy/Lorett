@@ -20,6 +20,9 @@ sudo apt-get install avahi-daemon libavahi-client-dev
 sudo su
 ```
 ```bash
+xargs rm < install_manifest.txt
+```
+```bash
 nmcli r wifi on
 ```
 Example, wifi_name is your SSID and wifi_password is password of network
