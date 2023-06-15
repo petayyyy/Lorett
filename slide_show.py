@@ -5,7 +5,6 @@ try:
     import rospy
     from sensor_msgs.msg import Image
     from cv_bridge import CvBridge
-    from clover import srv
     bridge = CvBridge()
 except: pass
 from docopt import docopt
