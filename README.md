@@ -15,6 +15,8 @@ Recommend installing avahi on Ubuntu (used for device discovery):
 sudo apt-get install avahi-daemon libavahi-client-dev 
 ```
 ## Команды: 
+https://wiki.radxa.com/Rock5/guide/linux-backupos  
+
 Подключеник к wifi сети:
 ```bash
 sudo su
