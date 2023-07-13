@@ -1,0 +1,285 @@
+    1  sudo fdisk -l
+    2  cd //
+    3  sudo mkdir mnt/hard_disk
+    4  ls
+    5  sudo chown rock:rock /mnt/hard_disk/
+    6  sudo blkid
+    7  sudo blkid | grep nvme0n1
+    8  sudo nano /etc/fstab
+    9  lsblk
+   10  sudo mount -a
+   11  sudo nano /etc/fstab
+   12  sudo mount -a
+   13  sudo parted -l
+   14  sudo nano /etc/fstab
+   15  sudo mount -a
+   16  sudo parted -l
+   17  lsblk
+   18  udisksctl mount -b /dev/nvme0n1
+   19  sudo apt install udisksctl
+   20  sudo apt install udisks
+   21  sudo mount /dev/nvme0n1 /mnt/hard_disk
+   22  sudo umount /dev/nvme0n1
+   23  mount help
+   24  mount -h
+   25  fdisk
+   26  fdisk -
+   27  fdisk -a
+   28  fdisk -l
+   29  lsblk
+   30  mkfs.ext4 /dev/nvme0n1
+   31  sudo mkfs.ext4 /dev/nvme0n1
+   32  mount /dev/nvme0n1 /mnt/hard_disk
+   33  sudo mount /dev/nvme0n1 /mnt/hard_disk
+   34  lsblk
+   35  sudo apt-get -y install hdparm
+   36  fdisk -l
+   37  sudo fdisk  -l
+   38  hdparm -t /dev/nvme0n1
+   39  sudo hdparm -t /dev/nvme0n1
+   40  lsusb 
+   41  SoapySDRUtil --find
+   42  sudo nano /boot/hw_intfc.conf
+   43  SoapySDRUtil --find
+   44  cd dependence_sdr/
+   45  ls
+   46  wget https://dl.armbian.com/_toolchains/gcc-linaro-7.4.1-2019.02-x86_64_aarch64-linux-gnu.tar.xz
+   47  lscpu
+   48  sudo apt-get install lm-sensors
+   49  sudo sensors-detect
+   50  sudo service kmod start
+   51  sensors
+   52  sudo apt-get install hddtemp
+   53  sudo hddtemp /dev/sda
+   54  sudo hddtemp /dev/
+   55  sudo hddtemp /dev/airspy-1-1
+   56  cat /sys/class/thermal/thermal_zone*/temp
+   57  <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | column -s $'\t' -t | sed 's/\(.\)..$/.\1°C/'
+   58  cat /sys/class/thermal/thermal_zone*/type
+   59  cat /sys/class/thermal/thermal_zone*/temp
+   60  hto
+   61  acpi -t
+   62  cat /sys/class/thermal/thermal_zone*/type
+   63  paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | column -s $'\t' -t | sed 's/\(.\)..$/.\1°C/'
+   64  sudo apt install column
+   65  apt-get install bsdmainutils
+   66  sudo apt-get install bsdmainutils
+   67  paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | column -s $'\t' -t | sed 's/\(.\)..$/.\1°C/'
+   68  ls
+   69  cd satdump/build/
+   70  ls
+   71  pwd
+   72  ls
+   73  python3 sdr_python3.py 
+   74  cd dependence_sdr/
+   75  ls
+   76  git clone https://github.com/nanomsg/nng.git 2>&1 || cd $path_installation
+   77  cd nng
+   78  mkdir build && cd build
+   79  cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/usr .. # Linux
+   80  make -j4
+   81  sudo make install
+   82  cd ../..
+   83  git clone https://github.com/altillimity/satdump.git || cd $path_installation
+   84  cd satdump
+   85  mkdir build && cd build
+   86  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIVE=ON .. # Linux
+   87  make
+   88  satdump live metop_ahrpt metop_output_directory --source airspy --samplerate 6e6 --frequency 1701.3e6 --general_gain 18 --bias --timeout 780
+   89  ./satdump live metop_ahrpt metop_output_directory --source airspy --samplerate 6e6 --frequency 1701.3e6 --general_gain 18 --bias --timeout 780
+   90  l
+   91  chmod +x ./satdump
+   92  ln -s ../pipelines . 
+   93  ln -s ../resources . 
+   94  cd ../../..
+   95  nano .bashrc 
+   96  source .bashrc 
+   97  satdump
+   98  mkdir ggg
+   99  satdump live metop_ahrpt ~/ggg --source airspy --samplerate 6e6 --frequency 1701.3e6 --general_gain 18 --bias --timeout 780
+  100  satdump live gk2a_lrit /files --source airspy --samplerate 3000000 --frequency 1.69214e9 --gain 40  --agc  --bias --dc_block true
+  101  cat ~/.config/satdump/settings.json
+  102  cd dependence_sdr/satdump/
+  103  ls
+  104  cd build/
+  105  ls
+  106  satdump live gk2a_lrit /files --source airspy --samplerate 3000000 --frequency 1.69214e9 --gain 40  --agc  --bias --dc_block true
+  107  satdump live gk2a_lrit /files --source airspy
+  108  satdump live gk2a_lrit ~/ggg --source airspy
+  109  satdump live metop_ahrpt ~/ggg --source airspy
+  110  satdump live metop_ahrpt ~/ggg --source airspy --samplerate 6e6 --frequency 1701.3e6 --general_gain 18 --bias --timeout 780
+  111  ls
+  112  cd ..
+  113  ls
+  114  nano satdump_cfg.json
+  115  ls
+  116  curl -sL https://rock.sh/rockpi-backup -o rockpi-backup.sh
+  117  wget https://raw.githubusercontent.com/akgnah/rockpi-toolkit/master/rockpi-backup.sh
+  118  sudo bash ./rockpi-backup.sh 
+  119  ls
+  120  sudo fdisk -l
+  121  sudo blkid
+  122  lsblk
+  123  cd //
+  124  sudo mkdir mnt/usb
+  125  sudo chown rock:rock /mnt/usb
+  126  sudo blkid
+  127  sudo nano /etc/fstab
+  128  lsblk
+  129  sudo mount -a
+  130  lsblk
+  131  cd 
+  132  ls
+  133  mv rockpi4-backup-230417-1550.img /mnt/usb/
+  134  sudo poweroff
+  135  wget http://airspy.com/downloads/spyserver-arm32.tgz
+  136  ls
+  137  mv spyserver-arm32.tgz dependence_sdr/
+  138  cd dependence_sdr/
+  139  ls
+  140  tar xzf spyserver-arm32.tgz
+  141  ls
+  142  chmod +x spyserver
+  143  ./spyserver spyserver.config
+  144  spyserver spyserver.config
+  145  bash spyserver spyserver.config
+  146  sudo spyserver spyserver.config
+  147  ls
+  148  mkdir spyserver_rr
+  149  mv spyserver* spyserver_rr
+  150  mkdir Spyserver_rr
+  151  mv spyserver Spyserver_rr
+  152  mv spyserver* Spyserver_rr
+  153  ls
+  154  cd Spyserver_rr/
+  155  ls
+  156  cd spyserver_rr/
+  157  ls
+  158  cd ..
+  159  sudo rm -r Spyserver_rr/
+  160  ls
+  161  mkdir spy_server
+  162  cd spy_server/
+  163  getconf LONG_BIT
+  164  wget https://airspy.com/downloads/spyserver-arm64.tgz
+  165  tar zxvf spyserver-arm64.tgz 
+  166  ls
+  167  chmod +x spyserver spyserver_ping
+  168  cd ..
+  169  sudo rm -r spy_server/
+  170  cd ..
+  171  nano bash_build_sdr.sh
+  172  sudo bash bash_build_sdr.sh 
+  173  rm -r bash_build_sdr.sh 
+  174  nano bash_build_sdr.sh
+  175  sudo bash bash_build_sdr.sh 
+  176  sudo ldconfig #needed on debian systems
+  177  SoapySDRUtil --info
+  178  SoapySDRUtil --find
+  179  python3 sdr_python3.py 
+  180  sudo nano /boot/hw_intfc.conf
+  181  sudo reboot
+  182  ls
+  183  cd dependence_sdr/
+  184  ls
+  185  cd ..
+  186  SoapySDRUtil --probe
+  187  lsusb
+  188  SoapySDRUtil --probe
+  189  SoapySDRUtil --find
+  190  ls
+  191  python3 sdr_python3.py 
+  192  SoapySDRUtil --info
+  193  python
+  194  python3
+  195  python -c "import sys; print(sys.maxsize > 2**32)"
+  196  python3 -c "import sys; print(sys.maxsize > 2**32)"
+  197  export "tyta pishi"
+  198  echo "tyta pishi"
+  199  sudo apt install libairspy
+  200  sudo apt install libairspy-dev
+  201  sudo apt-get install airspy libairspy-dev
+  202  SoapySDRUtil --probe="driver=airspy"
+  203  clear
+  204  sudo apt remove airspy libairspy-dev
+  205  sudo apt-get install cmake g++ libpython-dev python-numpy swig
+  206  sudo apt-get install cmake g++ libpython3-dev python3-numpy swig
+  207  ls
+  208  cd dependence_sdr/
+  209  ;s
+  210  ls
+  211  cd Soapy
+  212  ls
+  213  cd SoapyAirspy/
+  214  cmake clear
+  215  cmake --clear
+  216  sudo make uninstall && make clean
+  217  make clean
+  218  sudo cmake uninstall && cmake clean
+  219  sudo make clean
+  220  cd build/
+  221  sudo make uninstall && make clean
+  222  make clean
+  223  cd ..
+  224  rm -rf SoapyAirspy/
+  225  cd SoapySDR/
+  226  cd build
+  227  make clean
+  228  cd ..
+  229  rm -rf SoapySDR/
+  230  ls
+  231  cd airspyone_host-master/
+  232  cd build/
+  233  make clean
+  234  cd ..
+  235  rm airspyone_host-master/
+  236  rm -rf airspyone_host-master/
+  237  ls
+  238  git clone https://github.com/pothosware/SoapyAirspy.git
+  239  cd SoapyAirspy/
+  240  mkdir build
+  241  cd build/
+  242  cmake ..
+  243  make
+  244  sudo make install
+  245  cd ..
+  246  ls
+  247  git clone https://github.com/pothosware/SoapySDR.git
+  248  cd SoapySDR/
+  249  mkdir build
+  250  cd build
+  251  cmake ..
+  252  sudo apt install python3-dbg
+  253  cmake ..
+  254  make -j4
+  255  sudo make install
+  256  sudo ldconfig 
+  257  SoapySDRUtil --infoSoapySDRUtil --info
+  258  cd ..
+  259  ls
+  260  SoapySDRUtil --probe="driver=airspy"
+  261  cd SoapyAirspy/
+  262  cd build/
+  263  make clean
+  264  cd ..
+  265  rm -rf SoapyAirspy/
+  266  sudo apt-get remove airspy libairspy-dev
+  267  sudo apt remove airspy libairspy-dev
+  268  sudo apt install airspy libairspy-dev
+  269  git clone https://github.com/pothosware/SoapyAirspy.git
+  270  cd SoapyAirspy/
+  271  mkdir build 
+  272  cd build/
+  273  cmake ..
+  274  make
+  275  sudo make install
+  276  SoapySDRUtil --probe="driver=airspy"
+  277  sudo SoapySDRUtil --probe="driver=airspy"
+  278  python3
+  279  clear
+  280  sudo SoapySDRUtil --probe="driver=airspy"
+  281  cd ..
+  282  ls
+  283  python3 sdr_python3.py 
+  284  sudo python3 sdr_python3.py 
+  285  history > backup_sudo_sdr_work_blyat.txt
