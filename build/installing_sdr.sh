@@ -8,8 +8,8 @@ echo "Installing all dependence for SDR"
 
 echo "Install libs for python3 SDR soft"
 sudo apt-get install -y python3-scipy python3-matplotlib python3-numpy python3-docopt python3-prettytable python3-pyorbital
-pip3 install thread6 -y
-#pip3 install -y matplotlib>=3.3 requests>=2.26.0 pyorbital>=1.6.1 beautifulsoup4>=4.10.0 prettytable>=2.2.0
+pip3 install thread6 
+#pip3 install matplotlib>=3.3 requests>=2.26.0 pyorbital>=1.6.1 beautifulsoup4>=4.10.0 prettytable>=2.2.0
 
 echo "Create dependence directory"
 cd ~
